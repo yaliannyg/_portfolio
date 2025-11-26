@@ -1,0 +1,66 @@
+{
+  "FE": {
+    "name": "Front-End",
+    "techs": [
+      {
+        "name": "Html",
+        "level": "Experienced"
+      },
+      {
+        "name": "CSS",
+        "level": "Experienced"
+      },
+      {
+        "name": "JavaScript",
+        "level": "Experienced"
+      },
+      {
+        "name": "TypeScript",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Vue.js",
+        "level": "Experienced"
+      },
+      {
+        "name": "React.js",
+        "level": "Intermediate"
+      }
+    ]
+  },
+  "BE": {
+    "name": "Back-End",
+    "techs": [
+      {
+        "name": "Node / Express.js",
+        "level": "Intermediate"
+      },
+      {
+        "name": "MySQL",
+        "level": "Intermediate"
+      }
+    ]
+  },
+  "Other": {
+    "name": "Others",
+    "techs": [
+      {
+        "name": "Git",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Tailwind",
+        "level": "Intermediate"
+      },
+
+      {
+        "name": "Playwright",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Axios",
+        "level": "Intermediate"
+      }
+    ]
+  }
+}

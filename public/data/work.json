@@ -1,0 +1,75 @@
+{
+  "portfolio": [
+    {
+      "key": "vendor",
+      "img": "https://res.cloudinary.com/yalibj/image/upload/v1763571884/portfolio/Nereus/vendor/screen-cover.png",
+      "content": {
+        "title": "Vendor Application",
+        "description": " <p> Application for vendors to manage: <ul class='list-disc px-5 capitalize'> <li>Inventory</li> <li>Orders</li> <li>Auctions</li> <li>Upload Documents</li> <li>Visualize data in charts</li> <li>Visualize data in heatmap</li><li>Generate reports</li> </ul> </p>",
+        "images": [
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571884/portfolio/Nereus/vendor/screen-cover.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571882/portfolio/Nereus/vendor/Screen-1_nsf27c.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571882/portfolio/Nereus/vendor/Screen-3_uqwifr.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571882/portfolio/Nereus/vendor/Screen-13_wc9nsr.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571881/portfolio/Nereus/vendor/Screen-17_a01gpx.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571881/portfolio/Nereus/vendor/Screen-16_ph84sn.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571887/portfolio/Nereus/vendor/Screen-7_knrgut.png"
+        ]
+      }
+    },
+    {
+      "key": "auction",
+      "img": "https://res.cloudinary.com/yalibj/image/upload/v1763571880/portfolio/Nereus/customer/screen-cover.png",
+      "content": {
+        "title": "Auctions Page",
+        "description": " <p> Application for customers to: <ul class='list-disc px-5 capitalize'> <li>access to auctions</li> <li>bid in an auction</li> </ul> </p>",
+        "images": [
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571880/portfolio/Nereus/customer/screen-cover.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571880/portfolio/Nereus/customer/screen-3_j1mhhk.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571880/portfolio/Nereus/customer/screen-1_jczwkc.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571880/portfolio/Nereus/customer/screen-2_ydiqow.png"
+        ]
+      }
+    },
+    {
+      "key": "depot",
+      "img": "https://res.cloudinary.com/yalibj/image/upload/v1763571880/portfolio/Nereus/Depots/screen_cover.png",
+      "content": {
+        "title": "Depots Application",
+        "description": " <p> Application for depots to manage: <ul class='list-disc px-5 capitalize'> <li>releases</li> <li>invoices</li> </ul> </p>",
+        "images": [
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571880/portfolio/Nereus/Depots/screen_cover.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763571879/portfolio/Nereus/Depots/Screenshot_2025-11-17_at_1.10.00_PM_o6jigd.png"
+        ]
+      }
+    },
+    {
+      "key": "zinu",
+      "img": "https://res.cloudinary.com/yalibj/image/upload/v1763573371/portfolio/Zinu/screen-cover.png",
+      "content": {
+        "title": "Zinu Application",
+        "description": " <p> Application for users to: <ul class='list-disc px-5 capitalize'> <li>search zinu NTF </li> <li>redeem token to wallet</li> </ul> </p>",
+        "images": [
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573371/portfolio/Zinu/screen-cover.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573370/portfolio/Zinu/chrome-capture-2025-11-17_1_lllsbl.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573374/portfolio/Zinu/chrome-capture-2025-11-17_2_rktsxb.png"
+        ]
+      }
+    },
+    {
+      "key": "qrcodekit",
+      "img": "https://res.cloudinary.com/yalibj/image/upload/v1763573367/portfolio/Qr%20code%20kit/screen-cover.png",
+      "content": {
+        "title": "QR code kit Pages",
+        "description": " <p> Application for users to: <ul class='list-disc px-5 capitalize'> <li>generate QR of different typologies</li> <li>customize QR design</li> </ul> </p>",
+        "images": [
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573367/portfolio/Qr%20code%20kit/screen-cover.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573363/portfolio/Qr%20code%20kit/Screenshot_2025-11-17_at_1.52.17_PM_c1kzbg.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573362/portfolio/Qr%20code%20kit/Screenshot_2025-11-17_at_1.53.44_PM_ke8tnq.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573363/portfolio/Qr%20code%20kit/Screenshot_2025-11-17_at_1.58.16_PM_d4zhv0.png",
+          "https://res.cloudinary.com/yalibj/image/upload/v1763573365/portfolio/Qr%20code%20kit/chrome-capture-2025-11-17_eoaha7.png"
+        ]
+      }
+    }
+  ]
+}

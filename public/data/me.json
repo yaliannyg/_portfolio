@@ -1,0 +1,30 @@
+{
+  "name": "Yalianny Gonzalez",
+  "position": "Software developer",
+  "aboutMeImg": "https://res.cloudinary.com/yalibj/image/upload/v1763582493/portfolio/me_about_ur7jkx.jpg",
+  "aboutMeImgAlt": "About Me Image",
+  "details": [
+    {
+      "index": 1,
+      "icon": "computer",
+      "title": "Experience",
+      "description": ["5+ years Working remotly"]
+    },
+    {
+      "index": 2,
+      "icon": "graduation",
+      "title": "Education",
+      "description": [
+        "Bachelor’s Degree on computer Engineering",
+        "2011 - 2019"
+      ]
+    },
+    {
+      "index": 3,
+      "icon": "dictionary",
+      "title": "languages",
+      "description": ["english", "spanish"]
+    }
+  ],
+  "summarize": "I am a Software Developer with over 5 years of experience working with JavaScript technologies. My strength is frontend development, focusing on designing, building, and testing scalable web applications. I am dedicated to creating user-friendly interfaces, and my motivation is solving problems through clean and well-designed software."
+}

@@ -1,0 +1,23 @@
+@keyframes blurInLoop {
+  0%,
+  100% {
+    filter: blur(12px);
+    opacity: 0;
+  }
+  25%,
+  75% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+.blur-char {
+  filter: blur(12px);
+  opacity: 0;
+  animation: blurInLoop 3s ease-in-out infinite;
+  font-family: "Epilogue", ui-sans-serif, system-ui, sans-serif;
+}
+
+.blur-char {
+  animation-delay: calc(var(--char-index) * 0.05s);
+}

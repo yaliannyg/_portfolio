@@ -1,0 +1,22 @@
+{
+  "contact_info": [
+    {
+      "index": 1,
+      "icon": "email",
+      "title": "Email",
+      "link": "mailto:yaliannysg@gmail.com",
+      "description": [
+        "<a class='lowercase clamp-2' href='mailto:yaliannysg@gmail.com'>yaliannysg@gmail.com</a>"
+      ]
+    },
+    {
+      "index": 2,
+      "icon": "linkedIn",
+      "title": "linkedIn",
+      "link": "https://www.linkedin.com/in/yalianny-gonzalez-cerme%C3%B1o-165201161",
+      "description": [
+        "<a class='lowercase' href='https://www.linkedin.com/in/yalianny-gonzalez-cerme%C3%B1o-165201161'> Yalianny Gonzalez </a>"
+      ]
+    }
+  ]
+}
