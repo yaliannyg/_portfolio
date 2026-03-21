@@ -18,11 +18,10 @@ html {
 }
 
 .btn {
-  @apply text-primary px-5 py-3 rounded-md cursor-pointer border-primary border-solid border;
-}
-
-.btn-primary {
-  @apply bg-primary text-white;
+  color: var(--color-primary);
+  padding: 12px 20px;
+  cursor: pointer;
+  /* @apply text-primary px-5 py-3 rounded-md cursor-pointer border-primary border-solid border; */
 }
 
 button {

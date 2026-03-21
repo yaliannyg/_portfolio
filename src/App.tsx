@@ -5,10 +5,12 @@ import HeaderSection from "@/components/Header/HeaderSection";
 import AboutMeSection from "./components/About/AboutMeSection";
 import SkillsSections from "./components/Skills/SkillsSections";
 import ContactMeSection from "./components/Contact/ContactMeSection";
+import Navbar from "./components/Navbar";
+import { getProfile, type PortfolioProfile } from "./lib/notion";
 
 export const LetsTalkBtn = () => (
-  <a className="btn btn-primary" href="#contact">
-    Lets talk
+  <a className="btn " href="#contact">
+    Contact Me
   </a>
 );
 
@@ -19,23 +21,12 @@ export interface IDetail {
   description: string[];
 }
 
-interface IData {
-  name: string;
-  position: string;
-  aboutMeImg: string;
-  aboutMeImgAlt: string;
-  details: IDetail[];
-  summarize: string;
-}
-
 function App() {
-  const [data, setData] = useState<IData | null>(null);
+  const [data, setData] = useState<PortfolioProfile>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/data/me.json");
-      const data: IData = await res.json();
-
+      const data: PortfolioProfile = await getProfile();
       setData(data);
     };
     fetchData();
@@ -43,6 +34,7 @@ function App() {
   return (
     data && (
       <main className="app ">
+        <Navbar cvLink={data.cvLink} />
         <section id="header">
           <HeaderSection name={data.name} position={data.position} />
         </section>
@@ -53,7 +45,7 @@ function App() {
         >
           <div className="container max-w-5xl">
             <AboutMeSection
-              details={data.details}
+              // details={data.details}
               summarize={data.summarize}
               aboutMeImg={data.aboutMeImg}
               aboutMeImgAlt={data.aboutMeImgAlt}
