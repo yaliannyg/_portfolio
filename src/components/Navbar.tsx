@@ -50,7 +50,7 @@ function Navbar({ cvLink }: NavbarProps) {
             Download CV
           </a>
           <a
-            className="btn rounded-full text-sm text-variant leading-none"
+            className="btn rounded-full text-sm text-variant leading-none bg-primary"
             href="#contact"
           >
             Contact Me
