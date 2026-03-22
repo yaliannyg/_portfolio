@@ -2,11 +2,20 @@ import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoint
 
 export interface PortfolioProfile {
   name: string;
-  position: string;
   aboutMeImg: string;
   aboutMeImgAlt: string;
-  summarize: string;
   cvLink: string;
+  greeting: string;
+  logo: string;
+  position: string;
+  summarize: string;
+}
+
+export interface MeDetails {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
 }
 
 export type Contact = {
@@ -16,9 +25,10 @@ export type Contact = {
   link: string;
 };
 
-export const DB = {
+const DB = {
   me: import.meta.env.VITE_NOTION_DB_ME,
   contact: import.meta.env.VITE_NOTION_DB_CONTACT,
+  details: import.meta.env.VITE_NOTION_DB_ME_DETAILS,
 };
 
 function extractText(richText: Array<{ plain_text: string }> = []): string {
@@ -52,6 +62,39 @@ export async function getProfile(): Promise<PortfolioProfile> {
   );
 
   return JSON.parse(fixed) as PortfolioProfile;
+}
+
+function mapMeDetail(page: PageObjectResponse): MeDetails {
+  const { title, icon, description } = page.properties;
+
+  return {
+    id: page.id,
+    title: title.type === "title" ? (title.title[0]?.plain_text ?? "") : "",
+    icon:
+      icon.type === "rich_text" ? (icon.rich_text[0]?.plain_text ?? "") : "",
+    description:
+      description.type === "rich_text"
+        ? (description.rich_text[0]?.plain_text ?? "")
+        : "",
+  };
+}
+
+export async function getMeDetails(): Promise<MeDetails[]> {
+  const detailsData = await notionFetch(
+    `/v1/databases/${DB.details}/query`,
+    {},
+  );
+
+  return (detailsData.results as PageObjectResponse[]).map((page) => {
+    const { id, title, icon, description } = mapMeDetail(page);
+
+    return {
+      id,
+      title,
+      icon,
+      description,
+    };
+  });
 }
 
 function mapContact(page: PageObjectResponse): Contact {
