@@ -1,4 +1,9 @@
-export type Icon = "graduation" | "dictionary" | "computer" | "linkedIn" | "email";
+export type Icon =
+  | "graduation"
+  | "dictionary"
+  | "computer"
+  | "linkedIn"
+  | "email";
 interface IconProps {
   size?: number;
   className?: string;
@@ -45,7 +50,7 @@ export const DictionaryIcon = createIcon(
       stroke-linecap="round"
       stroke-linejoin="round"
     />
-  </>
+  </>,
 );
 
 export const EmailIcon = createIcon(
@@ -62,7 +67,7 @@ export const EmailIcon = createIcon(
       stroke-linecap="round"
       stroke-linejoin="round"
     />
-  </>
+  </>,
 );
 
 export const ComputerIcon = createIcon(
@@ -121,7 +126,7 @@ export const ComputerIcon = createIcon(
       stroke-linecap="round"
       stroke-linejoin="round"
     />
-  </>
+  </>,
 );
 
 export const GraduationIcon = createIcon(
@@ -157,7 +162,7 @@ export const GraduationIcon = createIcon(
         <rect width="14" height="14" fill="white" />
       </clipPath>
     </defs>
-  </>
+  </>,
 );
 
 export const LinkedInIcon = createIcon(
@@ -181,7 +186,7 @@ export const LinkedInIcon = createIcon(
         <rect width="14" height="14" fill="white" />
       </clipPath>
     </defs>
-  </>
+  </>,
 );
 
 export const StarIcon = createIcon(
@@ -192,5 +197,5 @@ export const StarIcon = createIcon(
       stroke-linecap="round"
       stroke-linejoin="round"
     />
-  </>
+  </>,
 );

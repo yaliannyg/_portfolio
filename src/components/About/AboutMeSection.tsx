@@ -1,48 +1,58 @@
-import SmallCard from "@/components/SmallCard";
-import SectionsTitle from "@/components/SectionsTitle";
-import { LetsTalkBtn, type IDetail } from "@/App";
+import { cn } from "@/utils";
 
-interface IProps {
-  details: IDetail[];
-  summarize: string;
+interface AboutMeSectionProps {
   aboutMeImg: string;
   aboutMeImgAlt: string;
+  greeting: string;
+  name: string;
+  position: string;
+  summarize: string;
 }
 
 function AboutMeSection({
-  details,
-  summarize,
   aboutMeImg,
   aboutMeImgAlt,
-}: IProps) {
+  greeting,
+  name,
+  position,
+  summarize,
+}: AboutMeSectionProps) {
   return (
-    <>
-      <SectionsTitle title="About me" subtitle="Get to know" />
-      <div className="flex flex-col md:flex-row gap-6 mt-10">
-        <div className="w-1/3 relative flex justify-center items-center m-auto h-[335px] min-w-[293px]">
-          <div className="size-full bg-primary absolute top-0 rounded-2xl "></div>
+    <div className="flex flex-col w-full">
+      <div className="flex gap-3 justify-center items-center">
+        <div className="flex-1 space-y-2">
+          <div className="flex flex-col tracking-widest gap-2">
+            <p className="text-primary text-xs uppercase ">{greeting}</p>
+            <div>
+              {name.split(" ").map((value, index) => (
+                <h1
+                  key={value}
+                  className={cn(
+                    "text-5xl font-semibold",
+                    index + 1 === name.split(" ").length
+                      ? "text-primary"
+                      : null,
+                  )}
+                >
+                  {value}
+                </h1>
+              ))}
+            </div>
+            <p>{position}</p>
+          </div>
+          <div className="text-gray-400 text-sm font-light max-w-xl leading-6">
+            <p>{summarize}</p>
+          </div>
+        </div>
+        <div className="w-52 h-60 ">
           <img
             src={aboutMeImg}
             alt={aboutMeImgAlt}
-            className="-rotate-6 rounded-2xl size-full shadow-2xs  "
+            className="rounded-2xl size-full shadow-2xs  "
           />
         </div>
-        <section className="flex-1 min-w-0" id="about_me_details">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 h-max">
-            {details.map((detail) => (
-              <SmallCard key={detail.index} {...detail} />
-            ))}
-          </div>
-
-          <div className="flex flex-col space-y-5" id="summarize-aboutme">
-            <p className="pt-12 text-justify ">{summarize}</p>
-            <div className="w-max flex">
-              <LetsTalkBtn />
-            </div>
-          </div>
-        </section>
       </div>
-    </>
+    </div>
   );
 }
 

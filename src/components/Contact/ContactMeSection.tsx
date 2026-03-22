@@ -1,27 +1,18 @@
 import { useEffect, useState } from "react";
-import { type IDetail } from "@/App";
-import SmallCard from "@/components/SmallCard";
 import SectionsTitle from "@/components/SectionsTitle";
-
-interface IContact extends IDetail {
-  link: string;
-}
-interface IData {
-  contact_info: IContact[];
-}
+import { getContacts, type Contact } from "@/lib/notion";
 
 function ContactMeSection() {
-  const [info, setInfo] = useState<IContact[]>([]);
+  const [info, setInfo] = useState<Contact[]>([]);
 
   function redirectTo(link: string) {
     window.open(link);
   }
   useEffect(() => {
     const fecthData = async () => {
-      const res = await fetch("/data/contact.json");
-      const data: IData = await res.json();
-      const { contact_info } = data;
-      setInfo(contact_info);
+      const contacts = await getContacts();
+
+      setInfo(contacts);
     };
     fecthData();
   }, []);
@@ -32,10 +23,11 @@ function ContactMeSection() {
         {info.map((contact) => (
           <button
             className="btn border-0 p-0"
-            key={contact.index}
+            key={contact.id}
             onClick={() => redirectTo(contact.link)}
           >
-            <SmallCard key={contact.index} {...contact} />
+            {JSON.stringify(contact)}
+            {/* <SmallCard key={contact.id} {...contact} /> */}
           </button>
         ))}
       </div>
