@@ -1,14 +1,19 @@
 import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
+interface Section {
+  title?: string;
+  description?: string;
+}
 export interface PortfolioProfile {
   name: string;
   aboutMeImg: string;
   aboutMeImgAlt: string;
   cvLink: string;
-  greeting: string;
   logo: string;
   position: string;
   summarize: string;
+  section_about_me: Section;
+  section_skills: Section;
 }
 
 export interface MeDetails {
@@ -16,6 +21,21 @@ export interface MeDetails {
   title: string;
   icon: string;
   description: string;
+}
+
+export type SkillLevel = "Experienced" | "Intermediate" | "Beginner";
+export type SkillCategory = "Front-End" | "Back-End" | "Others";
+
+export interface Skill {
+  id: string;
+  name: string;
+  category: SkillCategory;
+  level: SkillLevel;
+}
+
+export interface SkillsGroup {
+  category: SkillCategory;
+  skills: Skill[];
 }
 
 export type Contact = {
@@ -26,9 +46,10 @@ export type Contact = {
 };
 
 const DB = {
-  me: import.meta.env.VITE_NOTION_DB_ME,
   contact: import.meta.env.VITE_NOTION_DB_CONTACT,
   details: import.meta.env.VITE_NOTION_DB_ME_DETAILS,
+  me: import.meta.env.VITE_NOTION_DB_ME,
+  skills: import.meta.env.VITE_NOTION_DB_SKILLS,
 };
 
 function extractText(richText: Array<{ plain_text: string }> = []): string {
@@ -95,6 +116,43 @@ export async function getMeDetails(): Promise<MeDetails[]> {
       description,
     };
   });
+}
+
+function mapSkill(page: PageObjectResponse): Skill {
+  const { Name, Category, Level } = page.properties;
+
+  return {
+    id: page.id,
+    name: Name.type === "title" ? (Name.title[0]?.plain_text ?? "") : "",
+    category:
+      Category.type === "select"
+        ? ((Category.select?.name ?? "") as SkillCategory)
+        : ("" as SkillCategory),
+    level:
+      Level.type === "select"
+        ? ((Level.select?.name ?? "") as SkillLevel)
+        : ("" as SkillLevel),
+  };
+}
+
+// Flat list — use this if you just need all skills
+export async function getSkills(): Promise<Skill[]> {
+  const data = await notionFetch(`/v1/databases/${DB.skills}/query`, {});
+  return (data.results as PageObjectResponse[]).map(mapSkill);
+}
+
+// // Grouped by category — mirrors your JSON structure
+export async function getSkillsGrouped(): Promise<SkillsGroup[]> {
+  const skills = await getSkills();
+
+  const order: SkillCategory[] = ["Front-End", "Back-End", "Others"];
+
+  const grouped = order.map((category) => ({
+    category,
+    skills: skills.filter((s) => s.category === category),
+  }));
+
+  return grouped;
 }
 
 function mapContact(page: PageObjectResponse): Contact {

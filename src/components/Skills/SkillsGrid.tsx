@@ -1,57 +1,51 @@
-import { StarIcon } from "@/assets/icons/index";
+import { getSkillsGrouped, type SkillsGroup } from "@/lib/notion";
+import { cn } from "@/utils";
 import { useEffect, useState } from "react";
 
-type level = "Experienced" | "Intermediate" | "Beginner";
-type category = "FE" | "BE" | "Other";
-type ISkills = Record<category, IUISection>;
-
-interface ITech {
-  name: string;
-  level: level;
-}
-
-interface IUISection {
-  name: string;
-  techs: ITech[];
-}
-
 function SkillsGrid() {
-  const [skills, setSkills] = useState<ISkills | null>(null);
+  const [skills, setSkills] = useState<SkillsGroup[]>();
 
   useEffect(() => {
     const fecthData = async () => {
-      const res = await fetch("/data/skills.json");
-      const data: ISkills = await res.json();
+      const _skills = await getSkillsGrouped();
 
-      setSkills(data);
+      setSkills(_skills);
     };
     fecthData();
   }, []);
   return (
     skills && (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 grid-rows-1 px-5 gap-3 w-fit m-auto">
-        {(Object.keys(skills) as category[]).map((category, index) => (
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-3 w-full m-auto">
+        {skills.map((group) => (
           <div
-            key={index}
-            className={`flex flex-col border border-primary rounded-3xl px-5 py-4 justify-center h-max gap-4 w-full 
-             ${index === 0 ? "col-start-1 row-span-2" : ``}`}
+            key={group.category}
+            className="flex flex-col bg-primary/10 rounded-xl p-4 border border-primary/20 capitalize gap-3 text-sm"
           >
-            <span className="text-center font-black">
-              {skills[category].name}
+            <span className="font-semibold text-gray-400 text-sm uppercase">
+              {group.category}
             </span>
-            <div className="grid grid-cols-2 items-center">
-              {skills[category].techs.map(({ name, level }) => (
-                <div
-                  key={name}
-                  className="flex justify-center items-center w-min px-5 py-2"
-                >
-                  <StarIcon className="text-primary fill-primary" />
-                  <div className=" flex-1 flex flex-col px-2 ">
-                    <span className="wrap-break-word ">{name}</span>
-                    <span className="text-xs text-white/50">{level}</span>
+
+            <div className="flex flex-col items-center gap-2.5">
+              {group.skills.map((_skill) => (
+                <div className="flex w-full items-center leading-none">
+                  <div className="flex flex-1 gap-2 items-center">
+                    <div
+                      className={cn(
+                        "size-1.5 rounded-full",
+
+                        _skill.level === "Intermediate"
+                          ? "bg-primary/50"
+                          : "bg-primary",
+                      )}
+                    ></div>
+                    <div className="text-xs">{_skill.name}</div>
+                  </div>
+                  <div className="font-semibold text-[10px] text-gray-400 ">
+                    {_skill.level}
                   </div>
                 </div>
               ))}
+
               <div />
             </div>
           </div>

@@ -3,7 +3,6 @@ import { type Icon } from "./assets/icons";
 import WorkSection from "./components/Work/WorkSection";
 // import HeaderSection from "@/components/Header/HeaderSection";
 import AboutMeSection from "./components/About/AboutMeSection";
-import SkillsSections from "./components/Skills/SkillsSections";
 import ContactMeSection from "./components/Contact/ContactMeSection";
 import Navbar from "./components/Navbar";
 import {
@@ -13,6 +12,8 @@ import {
   type PortfolioProfile,
 } from "./lib/notion";
 import AboutMeDetails from "./components/About/AboutMeDetails";
+import SectionsTitle from "./components/SectionsTitle";
+import SkillsGrid from "./components/Skills/SkillsGrid";
 export const LetsTalkBtn = () => (
   <a className="btn " href="#contact">
     Contact Me
@@ -49,10 +50,10 @@ function App() {
             id="about"
           >
             <div>
+              <SectionsTitle description={data.section_about_me.description} />
               <AboutMeSection
                 aboutMeImg={data.aboutMeImg}
                 aboutMeImgAlt={data.aboutMeImgAlt}
-                greeting={data.greeting}
                 name={data.name}
                 position={data.position}
                 summarize={data.summarize}
@@ -80,7 +81,12 @@ function App() {
           </section>
 
           <section id="skills">
-            <SkillsSections />
+            <SectionsTitle
+              description={data.section_skills.description}
+              title={data.section_skills.title}
+            />
+
+            <SkillsGrid />
           </section>
 
           {/* <section id="work">

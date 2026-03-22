@@ -1,12 +1,16 @@
 interface IProps {
-  title: string;
-  subtitle?: string;
+  title?: string;
+  description?: string;
 }
-function SectionsTitle({ title, subtitle }: IProps) {
+function SectionsTitle({ title, description }: IProps) {
   return (
-    <div className="flex flex-col text-center capitalize">
-      <h6 className="text-xl text-white/50">{subtitle}</h6>
-      <h5 className="text-primary text-3xl"> {title} </h5>
+    <div className="flex flex-col capitalize">
+      {description && (
+        <h6 className="text-primary text-xs tracking-widest uppercase mb-1.5">
+          {description}
+        </h6>
+      )}
+      {title && <h5 className="text-white text-xl mt-1.5 mb-6"> {title} </h5>}
     </div>
   );
 }

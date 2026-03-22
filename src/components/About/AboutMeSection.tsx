@@ -3,7 +3,6 @@ import { cn } from "@/utils";
 interface AboutMeSectionProps {
   aboutMeImg: string;
   aboutMeImgAlt: string;
-  greeting: string;
   name: string;
   position: string;
   summarize: string;
@@ -12,7 +11,6 @@ interface AboutMeSectionProps {
 function AboutMeSection({
   aboutMeImg,
   aboutMeImgAlt,
-  greeting,
   name,
   position,
   summarize,
@@ -22,7 +20,6 @@ function AboutMeSection({
       <div className="flex gap-3 justify-center items-center">
         <div className="flex-1 space-y-2">
           <div className="flex flex-col tracking-widest gap-2">
-            <p className="text-primary text-xs uppercase ">{greeting}</p>
             <div>
               {name.split(" ").map((value, index) => (
                 <h1
