@@ -1,24 +1,14 @@
 import { useEffect, useState } from "react";
 import { type Icon } from "./assets/icons";
-import WorkSection from "./components/Work/WorkSection";
-// import HeaderSection from "@/components/Header/HeaderSection";
+
 import AboutMeSection from "./components/About/AboutMeSection";
 import ContactMeSection from "./components/Contact/ContactMeSection";
 import Navbar from "./components/Navbar";
-import {
-  getMeDetails,
-  getProfile,
-  type MeDetailWithDescriptions,
-  type PortfolioProfile,
-} from "./lib/notion";
+import { getProfile, type PortfolioProfile } from "./lib/notion";
 import AboutMeDetails from "./components/About/AboutMeDetails";
 import SectionsTitle from "./components/SectionsTitle";
-import SkillsGrid from "./components/Skills/SkillsGrid";
-export const LetsTalkBtn = () => (
-  <a className="btn " href="#contact">
-    Contact Me
-  </a>
-);
+import SkillsGrid from "./components/Skills/SkillsSection";
+import ProjectsSection from "./components/Work/ProjectsSection";
 
 export interface IDetail {
   index: number;
@@ -46,7 +36,7 @@ function App() {
           <Navbar cvLink={data.cvLink} logo={data.logo} />
 
           <section
-            className="flex flex-col py-12 pt-24 w-full gap-4"
+            className="flex flex-col pb-12 pt-24 w-full gap-4"
             id="about"
           >
             <div>
@@ -80,7 +70,7 @@ function App() {
             </div>
           </section>
 
-          <section id="skills">
+          <section id="skills" className="pb-12">
             <SectionsTitle
               description={data.section_skills.description}
               title={data.section_skills.title}
@@ -89,10 +79,15 @@ function App() {
             <SkillsGrid />
           </section>
 
-          {/* <section id="work">
-            <WorkSection />
+          <section id="projects">
+            <SectionsTitle
+              description={data.section_projects.description}
+              title={data.section_projects.title}
+            />
+            <ProjectsSection />
+            {/* <WorkSection /> */}
           </section>
-          <section id="contact">
+          {/* <section id="contact">
             <ContactMeSection />
           </section> */}
         </div>
