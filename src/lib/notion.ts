@@ -14,6 +14,7 @@ export interface PortfolioProfile {
   summarize: string;
   section_about_me: Section;
   section_skills: Section;
+  section_projects: Section;
 }
 
 export interface MeDetails {
@@ -38,6 +39,16 @@ export interface SkillsGroup {
   skills: Skill[];
 }
 
+export interface ProjectItem {
+  coverImage: string;
+  description: string;
+  id: string;
+  images: string[];
+  key: string;
+  title: string;
+  technologies: string[];
+}
+
 export type Contact = {
   id: string;
   title: string;
@@ -50,6 +61,7 @@ const DB = {
   details: import.meta.env.VITE_NOTION_DB_ME_DETAILS,
   me: import.meta.env.VITE_NOTION_DB_ME,
   skills: import.meta.env.VITE_NOTION_DB_SKILLS,
+  projects: import.meta.env.VITE_NOTION_DB_PROJECTS,
 };
 
 function extractText(richText: Array<{ plain_text: string }> = []): string {
@@ -169,4 +181,56 @@ function mapContact(page: PageObjectResponse): Contact {
 export async function getContacts() {
   const data = await notionFetch(`/v1/databases/${DB.contact}/query`, {});
   return data.results.map(mapContact);
+}
+
+function mapPortfolioItem(page: PageObjectResponse): PortfolioItem {
+  const { Name, Key, Description, Images, Technologies } =
+    page.properties as Record<
+      string,
+      Extract<
+        PageObjectResponse["properties"][string],
+        { type: "title" | "rich_text" | "url" }
+      >
+    >;
+
+  const coverImageProp = page.properties["Cover Image"] as Extract<
+    PageObjectResponse["properties"][string],
+    { type: "url" }
+  >;
+
+  const rawImages =
+    Images.type === "rich_text" ? extractText(Images.rich_text) : "";
+
+  const rawTechonologies =
+    Technologies.type === "rich_text"
+      ? extractText(Technologies.rich_text)
+      : "";
+
+  return {
+    id: page.id,
+    key: Key.type === "rich_text" ? extractText(Key.rich_text) : "",
+    title: Name.type === "title" ? (Name.title[0]?.plain_text ?? "") : "",
+    description:
+      Description.type === "rich_text"
+        ? extractText(Description.rich_text)
+        : "",
+    coverImage: coverImageProp.type === "url" ? (coverImageProp.url ?? "") : "",
+    images: rawImages
+      ? rawImages
+          .split(",")
+          .map((url) => url.trim())
+          .filter(Boolean)
+      : [],
+    technologies: rawTechonologies
+      ? rawTechonologies
+          .split(",")
+          .map((url) => url.trim())
+          .filter(Boolean)
+      : [],
+  };
+}
+
+export async function getProjects(): Promise<ProjectItem[]> {
+  const data = await notionFetch(`/v1/databases/${DB.projects}/query`, {});
+  return (data.results as PageObjectResponse[]).map(mapPortfolioItem);
 }

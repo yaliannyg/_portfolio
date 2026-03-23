@@ -27,7 +27,7 @@ function Navbar({ cvLink, logo }: NavbarProps) {
 
   return (
     <nav className="fixed w-full flex items-center py-2 gap-2 bg-transparent backdrop-blur-xl rounded-full top-2 z-50 left-1/2 -translate-x-1/2 px-5">
-      <div className="text-white text-2xl font-bold tracking-wider">
+      <div className="text-2xl font-bold tracking-wider text-primary">
         <a href={`#`}>{logo}</a>
       </div>
       <ul className="flex mx-auto gap-2">

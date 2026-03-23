@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { type Icon } from "./assets/icons";
-
-import AboutMeSection from "./components/About/AboutMeSection";
 import ContactMeSection from "./components/Contact/ContactMeSection";
-import Navbar from "./components/Navbar";
 import { getProfile, type PortfolioProfile } from "./lib/notion";
 import AboutMeDetails from "./components/About/AboutMeDetails";
+import AboutMeSection from "./components/About/AboutMeSection";
+import Navbar from "./components/Navbar";
 import SectionsTitle from "./components/SectionsTitle";
 import SkillsGrid from "./components/Skills/SkillsSection";
 import ProjectsSection from "./components/Work/ProjectsSection";
@@ -32,7 +31,7 @@ function App() {
   return (
     data && (
       <main className="text-white bg-linear-to-br from-slate-950 to-slate-800 min-h-screen p-5 relative">
-        <div className="md:max-w-4xl m-auto  ">
+        <div className="md:max-w-4xl m-auto px-10 ">
           <Navbar cvLink={data.cvLink} logo={data.logo} />
 
           <section
@@ -85,7 +84,6 @@ function App() {
               title={data.section_projects.title}
             />
             <ProjectsSection />
-            {/* <WorkSection /> */}
           </section>
           {/* <section id="contact">
             <ContactMeSection />

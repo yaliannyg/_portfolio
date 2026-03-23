@@ -1,14 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap");
-
-/* <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> */
 @import url("./assets/transitions.css");
 @import "tailwindcss" important;
 
 @theme {
-  --font-sans: "Epilogue", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
   --color-primary: #4db5ff;
   --color-variant: #2c2c6c;
-  --color-dark: #161b22
+  --color-dark: #161b22;
 }
 
 html {
@@ -18,13 +15,9 @@ html {
   scroll-behavior: smooth;
 }
 
+button,
 .btn {
   color: var(--color-primary);
   padding: 12px 20px;
   cursor: pointer;
-  /* @apply text-primary px-5 py-3 rounded-md cursor-pointer border-primary border-solid border; */
-}
-
-button {
-  @apply cursor-pointer;
 }
