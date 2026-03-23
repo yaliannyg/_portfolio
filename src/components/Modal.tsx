@@ -1,36 +1,67 @@
-interface IProps {
-  isOpen: boolean;
-  setIsOpen: (value: boolean) => void;
-  data: string[];
-}
-import Carrusel from "./Carrusel";
-export default function Modal({ isOpen, setIsOpen, data }: IProps) {
-  return (
-    <>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="fixed inset-0 bg-black/50 transition-opacity" />
-          <div className="flex min-h-full items-center justify-center p-4">
-            <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full p-6 transform transition-all flex flex-col">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors size-6 shadow shadow-black/5 rounded-2xl z-50"
-              >
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import { IconX } from "@tabler/icons-react";
 
-              <Carrusel images={data} />
-            </div>
-          </div>
+interface ModalProps {
+  children: React.ReactNode;
+  isOpen: boolean;
+  subtitle?: string;
+  title: string;
+  onClose: () => void;
+}
+
+export default function Modal({
+  children,
+  isOpen,
+  subtitle,
+  title,
+  onClose,
+}: ModalProps) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      aria-modal="true"
+      role="dialog"
+    >
+      <div
+        className="absolute inset-0 bg-black/5 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <div className="relative z-10 rounded-xl bg-slate-800 p-7 shadow-xl w-md text-white ">
+        {/* Header */}
+        <div className="flex flex-col mb-3.5 relative gap-1.5">
+          <h2 className="text-base font-semibold text-white">{title}</h2>
+
+          <h6 className="text-[10px] text-primary">{subtitle} </h6>
+          <button
+            onClick={onClose}
+            className="-top-4 -right-2 absolute rounded-lg p-1.5 bg-primary/20 transition-colors text-primary"
+          >
+            <IconX size={16} />
+          </button>
         </div>
-      )}
-    </>
+
+        <div className="text-gray-600">{children}</div>
+      </div>
+    </div>,
+    document.body,
   );
 }

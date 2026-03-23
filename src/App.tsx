@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { type Icon } from "./assets/icons";
 import ContactMeSection from "./components/Contact/ContactMeSection";
 import { getProfile, type PortfolioProfile } from "./lib/notion";
 import AboutMeDetails from "./components/About/AboutMeDetails";
@@ -8,13 +7,6 @@ import Navbar from "./components/Navbar";
 import SectionsTitle from "./components/SectionsTitle";
 import SkillsGrid from "./components/Skills/SkillsSection";
 import ProjectsSection from "./components/Work/ProjectsSection";
-
-export interface IDetail {
-  index: number;
-  icon: Icon;
-  title: string;
-  description: string[];
-}
 
 function App() {
   const [data, setData] = useState<PortfolioProfile>();

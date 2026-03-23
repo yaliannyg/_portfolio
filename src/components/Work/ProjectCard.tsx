@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../Modal";
 import { type ProjectItem } from "@/lib/notion";
-
+import ModalProject from "./ModalProject";
 type ProjectCardProps = Omit<ProjectItem, "key" | "id">;
 function ProjectCard({
   images,
@@ -47,7 +47,19 @@ function ProjectCard({
           </button>
         </div>
       </div>
-      <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} data={images} />
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={title}
+        subtitle="Project details"
+      >
+        <ModalProject
+          images={images}
+          description={description}
+          technologies={technologies}
+        />
+      </Modal>
     </div>
   );
 }

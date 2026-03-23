@@ -1,21 +1,20 @@
-import {
-  EmailIcon,
-  LinkedInIcon,
-  ComputerIcon,
-  DictionaryIcon,
-  GraduationIcon,
-} from "@/assets/icons/index";
 import type { MeDetails } from "@/lib/notion";
-
+import {
+  IconMessage2,
+  IconSchool,
+  IconDeviceDesktop,
+  IconBrandLinkedin,
+  IconMail,
+} from "@tabler/icons-react";
 function SmallCard({ description, icon, title }: MeDetails) {
   const icons = {
-    graduation: GraduationIcon,
-    dictionary: DictionaryIcon,
-    computer: ComputerIcon,
-    linkedIn: LinkedInIcon,
-    email: EmailIcon,
+    graduation: IconSchool,
+    dictionary: IconMessage2,
+    computer: IconDeviceDesktop,
+    linkedIn: IconBrandLinkedin,
+    email: IconMail,
   };
-  const IconComponent = icons[icon as keyof typeof icons] ?? GraduationIcon;
+  const IconComponent = icons[icon as keyof typeof icons] ?? IconSchool;
   return (
     <div className="flex bg-primary/10 rounded-xl items-center p-4 border border-primary/20 capitalize gap-3 text-sm">
       <div className=" bg-slate-800 p-2 rounded-xl border border-slate-900">

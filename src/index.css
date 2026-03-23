@@ -10,8 +10,6 @@
 
 html {
   font-family: "Epilogue", ui-sans-serif, system-ui, sans-serif;
-  /* height: 100vh; */
-  /* @apply text-white bg-linear-to-br from-slate-900 to-slate-800  h-screen; */
   scroll-behavior: smooth;
 }
 
