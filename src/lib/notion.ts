@@ -15,6 +15,7 @@ export interface PortfolioProfile {
   section_about_me: Section;
   section_skills: Section;
   section_projects: Section;
+  section_contact: Section;
 }
 
 export interface MeDetails {
@@ -54,6 +55,7 @@ export type Contact = {
   title: string;
   icon: string;
   link: string;
+  linkLabel: string;
 };
 
 const DB = {
@@ -167,22 +169,6 @@ export async function getSkillsGrouped(): Promise<SkillsGroup[]> {
   return grouped;
 }
 
-function mapContact(page: PageObjectResponse): Contact {
-  const { title, icon, link } = page.properties;
-  return {
-    id: page.id,
-    title: title.type === "title" ? (title.title[0]?.plain_text ?? "") : "",
-    icon:
-      icon.type === "rich_text" ? (icon.rich_text[0]?.plain_text ?? "") : "",
-    link: link.type === "url" ? (link.url ?? "") : "",
-  };
-}
-
-export async function getContacts() {
-  const data = await notionFetch(`/v1/databases/${DB.contact}/query`, {});
-  return data.results.map(mapContact);
-}
-
 function mapPortfolioItem(page: PageObjectResponse): PortfolioItem {
   const { Name, Key, Description, Images, Technologies } =
     page.properties as Record<
@@ -233,4 +219,29 @@ function mapPortfolioItem(page: PageObjectResponse): PortfolioItem {
 export async function getProjects(): Promise<ProjectItem[]> {
   const data = await notionFetch(`/v1/databases/${DB.projects}/query`, {});
   return (data.results as PageObjectResponse[]).map(mapPortfolioItem);
+}
+
+function mapContact(page: PageObjectResponse): Contact {
+  const { title, icon, link } = page.properties;
+  const linkLabelProp = page.properties["Link Label"] as Extract<
+    PageObjectResponse["properties"][string],
+    { type: "rich_text" }
+  >;
+
+  return {
+    id: page.id,
+    title: title.type === "title" ? (title.title[0]?.plain_text ?? "") : "",
+    icon:
+      icon.type === "rich_text" ? (icon.rich_text[0]?.plain_text ?? "") : "",
+    link: link.type === "url" ? (link.url ?? "") : "",
+    linkLabel:
+      linkLabelProp.type === "rich_text"
+        ? (linkLabelProp.rich_text[0]?.plain_text ?? "")
+        : "",
+  };
+}
+
+export async function getContacts() {
+  const data = await notionFetch(`/v1/databases/${DB.contact}/query`, {});
+  return data.results.map(mapContact);
 }

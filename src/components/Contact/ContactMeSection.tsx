@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import SectionsTitle from "@/components/SectionsTitle";
 import { getContacts, type Contact } from "@/lib/notion";
+import ContactCard from "../Contact/ContactCard";
 
 function ContactMeSection() {
   const [info, setInfo] = useState<Contact[]>([]);
@@ -17,20 +17,23 @@ function ContactMeSection() {
     fecthData();
   }, []);
   return (
-    <div className="m-10 pb-10">
-      <SectionsTitle title="Contact Me" subtitle="Get In Touch" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 w-fit m-auto gap-5 mt-10">
-        {info.map((contact) => (
-          <button
-            className="btn border-0 p-0"
+    <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-5">
+      {info.map((contact) => (
+        <button
+          className="border-0 p-0"
+          key={contact.id}
+          onClick={() => redirectTo(contact.link)}
+        >
+          <ContactCard
+            id={contact.id}
             key={contact.id}
-            onClick={() => redirectTo(contact.link)}
-          >
-            {JSON.stringify(contact)}
-            {/* <SmallCard key={contact.id} {...contact} /> */}
-          </button>
-        ))}
-      </div>
+            icon={contact.icon}
+            title={contact.title}
+            link={contact.link}
+            linkLabel={contact.linkLabel}
+          />
+        </button>
+      ))}
     </div>
   );
 }

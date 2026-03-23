@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import ContactMeSection from "./components/Contact/ContactMeSection";
 import { getProfile, type PortfolioProfile } from "./lib/notion";
 import AboutMeDetails from "./components/About/AboutMeDetails";
 import AboutMeSection from "./components/About/AboutMeSection";
+import ContactMeSection from "./components/Contact/ContactMeSection";
 import Navbar from "./components/Navbar";
 import SectionsTitle from "./components/SectionsTitle";
 import SkillsGrid from "./components/Skills/SkillsSection";
@@ -70,16 +70,20 @@ function App() {
             <SkillsGrid />
           </section>
 
-          <section id="projects">
+          <section id="projects" className="pb-12">
             <SectionsTitle
               description={data.section_projects.description}
               title={data.section_projects.title}
             />
             <ProjectsSection />
           </section>
-          {/* <section id="contact">
+          <section id="contact">
+            <SectionsTitle
+              description={data.section_contact.description}
+              title={data.section_contact.title}
+            />
             <ContactMeSection />
-          </section> */}
+          </section>
         </div>
       </main>
     )
