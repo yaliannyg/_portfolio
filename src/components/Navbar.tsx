@@ -10,7 +10,7 @@ function Navbar({ cvLink, logo, cta }: NavbarProps) {
   const navbar = {
     links: [
       {
-        href: "header",
+        href: "about",
         label: cta.Navigation.about,
       },
       {
@@ -18,7 +18,7 @@ function Navbar({ cvLink, logo, cta }: NavbarProps) {
         label: cta.Navigation.skills,
       },
       {
-        href: "work",
+        href: "projects",
         label: cta.Navigation.work,
       },
       {
