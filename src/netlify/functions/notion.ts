@@ -18,7 +18,7 @@ function resolveAliases(path: string): string {
 }
 
 const handler: Handler = async (event) => {
-  const rawPath = event.path.replace("/.netlify/functions/notion", "");
+  const rawPath = event.path.replace(/^\/(\.netlify\/functions\/notion|notion)/, "");
   const path = resolveAliases(rawPath);
   const url = `https://api.notion.com${path}`;
 

@@ -1,0 +1,13 @@
+[build]
+  publish = "dist"
+  functions = "src/netlify/functions"
+
+[[redirects]]
+  from = "/notion/*"
+  to = "/.netlify/functions/notion"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
