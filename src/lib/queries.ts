@@ -1,16 +1,12 @@
-import {
-  getAboutMe,
-  getSections,
-  getMeDetails,
-  getSkillsGrouped,
-  getProjects,
-  getContacts,
-  getCTALabels,
-} from "./notion";
+import { getAllData } from "./notion";
 
-export const appDataPromise = Promise.all([getAboutMe(), getSections()]);
-export const contactsPromise = getContacts();
-export const projectsPromise = getProjects();
-export const meDetailsPromise = getMeDetails();
-export const skillsGroupedPromise = getSkillsGrouped();
-export const ctaLabelsPromise = getCTALabels();
+const allDataPromise = getAllData();
+
+export const appDataPromise = allDataPromise.then(
+  (d) => [d.aboutMe, d.sections] as const,
+);
+export const contactsPromise = allDataPromise.then((d) => d.contacts);
+export const projectsPromise = allDataPromise.then((d) => d.projects);
+export const meDetailsPromise = allDataPromise.then((d) => d.meDetails);
+export const skillsGroupedPromise = allDataPromise.then((d) => d.skillsGrouped);
+export const ctaLabelsPromise = allDataPromise.then((d) => d.ctaLabels);

@@ -342,3 +342,69 @@ export async function getContacts(): Promise<Contact[]> {
   const data = await notionFetch(`/v1/databases/${DB.contact}/query`, {});
   return data.results.map(mapContact);
 }
+
+export interface AllData {
+  aboutMe: AboutMe;
+  sections: SectionGroup;
+  meDetails: MeDetails[];
+  skillsGrouped: SkillsGroup[];
+  projects: ProjectItem[];
+  contacts: Contact[];
+  ctaLabels: CTALabels;
+}
+
+export async function getAllData(): Promise<AllData> {
+  const raw = await notionFetch("/all");
+
+  const aboutMeRecord = Object.fromEntries(
+    (raw.profile.results as PageObjectResponse[]).map(mapAboutMe),
+  );
+  const aboutMe: AboutMe = {
+    name: aboutMeRecord["name"] ?? "",
+    aboutMeImg: aboutMeRecord["aboutMeImg"] ?? "",
+    aboutMeImgAlt: aboutMeRecord["aboutMeImgAlt"] ?? "",
+    cvLink: aboutMeRecord["cvLink"] ?? "",
+    logo: aboutMeRecord["logo"] ?? "",
+    position: aboutMeRecord["position"] ?? "",
+    summarize: aboutMeRecord["summarize"] ?? "",
+  };
+
+  const sections = Object.fromEntries(
+    (raw.sections.results as PageObjectResponse[]).map(mapSection),
+  ) as SectionGroup;
+
+  const meDetails = (raw.details.results as PageObjectResponse[]).map(
+    mapMeDetail,
+  );
+
+  const skills = (raw.skills.results as PageObjectResponse[]).map(mapSkill);
+  const order: SkillCategory[] = ["Front-End", "Back-End", "Others"];
+  const skillsGrouped = order.map((category) => ({
+    category,
+    skills: skills.filter((s) => s.category === category),
+  }));
+
+  const projects = (raw.projects.results as PageObjectResponse[]).map(
+    mapPortfolioItem,
+  );
+
+  const contacts = (raw.contact.results as PageObjectResponse[]).map(
+    mapContact,
+  );
+
+  const ctaInitial: CTALabels = { Button: {}, Navigation: {}, Link: {} };
+  const ctaLabels = (raw.ctaLabels.results as PageObjectResponse[]).reduce(
+    mapLabel,
+    ctaInitial,
+  );
+
+  return {
+    aboutMe,
+    sections,
+    meDetails,
+    skillsGrouped,
+    projects,
+    contacts,
+    ctaLabels,
+  };
+}
