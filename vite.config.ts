@@ -20,13 +20,14 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => {
             const DB_ALIASES: Record<string, string> = {
-              contact: env.NOTION_DB_CONTACT,
-              ctaLabels: env.NOTION_DB_CTA_LABELS,
-              details: env.NOTION_DB_ME_DETAILS,
-              profile: env.NOTION_DB_ME,
-              projects: env.NOTION_DB_PROJECTS,
-              sections: env.NOTION_DB_SECTIONS,
-              skills: env.NOTION_DB_SKILLS,
+              contact: env.VITE_NOTION_DB_CONTACT,
+              ctaLabels: env.VITE_NOTION_DB_CTA_LABELS,
+              details: env.VITE_NOTION_DB_ME_DETAILS,
+              meDescriptions: env.VITE_NOTION_DB_ME_DESCRIPTIONS,
+              profile: env.VITE_NOTION_DB_ME,
+              projects: env.VITE_NOTION_DB_PROJECTS,
+              sections: env.VITE_NOTION_DB_SECTIONS,
+              skills: env.VITE_NOTION_DB_SKILLS,
             };
             return path
               .replace(/^\/notion/, "")

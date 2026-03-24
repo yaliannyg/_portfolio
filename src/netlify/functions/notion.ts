@@ -1,13 +1,14 @@
 import type { Handler } from "@netlify/functions";
 
 const DB_ALIASES: Record<string, string | undefined> = {
-  contact: process.env.NOTION_DB_CONTACT,
-  ctaLabels: process.env.NOTION_DB_CTA_LABELS,
-  details: process.env.NOTION_DB_ME_DETAILS,
-  profile: process.env.NOTION_DB_ME,
-  projects: process.env.NOTION_DB_PROJECTS,
-  sections: process.env.NOTION_DB_SECTIONS,
-  skills: process.env.NOTION_DB_SKILLS,
+  contact: process.env.VITE_NOTION_DB_CONTACT,
+  ctaLabels: process.env.VITE_NOTION_DB_CTA_LABELS,
+  details: process.env.VITE_NOTION_DB_ME_DETAILS,
+  meDescriptions: process.env.VITE_NOTION_DB_ME_DESCRIPTIONS,
+  profile: process.env.VITE_NOTION_DB_ME,
+  projects: process.env.VITE_NOTION_DB_PROJECTS,
+  sections: process.env.VITE_NOTION_DB_SECTIONS,
+  skills: process.env.VITE_NOTION_DB_SKILLS,
 };
 
 function resolveAliases(path: string): string {
