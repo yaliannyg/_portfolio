@@ -69,13 +69,13 @@ export type Contact = {
 };
 
 const DB = {
-  contact: import.meta.env.VITE_NOTION_DB_CONTACT,
-  ctaLabels: import.meta.env.VITE_NOTION_DB_CTA_LABELS,
-  details: import.meta.env.VITE_NOTION_DB_ME_DETAILS,
-  profile: import.meta.env.VITE_NOTION_DB_ME,
-  projects: import.meta.env.VITE_NOTION_DB_PROJECTS,
-  sections: import.meta.env.VITE_NOTION_DB_SECTIONS,
-  skills: import.meta.env.VITE_NOTION_DB_SKILLS,
+  contact: "contact",
+  ctaLabels: "ctaLabels",
+  details: "details",
+  profile: "profile",
+  projects: "projects",
+  sections: "sections",
+  skills: "skills",
 };
 
 function extractText(richText: Array<{ plain_text: string }> = []): string {
