@@ -3,7 +3,7 @@ import {
   getAboutMe,
   getSections,
   type AboutMe,
-  type Section,
+  type SectionGroup,
 } from "./lib/notion";
 import { useCTALabels } from "./context/CtaContext";
 import Navbar from "./components/Navbar";
@@ -16,12 +16,12 @@ import ProjectsSection from "./components/Work/ProjectsSection";
 
 function App() {
   const labels = useCTALabels();
-  const [aboutMe, setAboutMe] = useState<PortfolioProfile>();
-  const [sections, setSections] = useState<PortfolioSection>();
+  const [aboutMe, setAboutMe] = useState<AboutMe>();
+  const [sections, setSections] = useState<SectionGroup>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const [_aboutMe, _sections]: [AboutMe, Section] = await Promise.all([
+      const [_aboutMe, _sections]: [AboutMe, SectionGroup] = await Promise.all([
         getAboutMe(),
         getSections(),
       ]);
@@ -34,7 +34,8 @@ function App() {
 
   return (
     aboutMe &&
-    labels && (
+    labels &&
+    sections && (
       <main className="text-white bg-linear-to-br from-slate-950 to-slate-800 min-h-screen p-5 relative">
         <div className="md:max-w-4xl m-auto px-10 ">
           <Navbar cvLink={aboutMe.cvLink} logo={aboutMe.logo} cta={labels} />

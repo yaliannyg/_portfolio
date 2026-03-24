@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import AboutMeDescriptionsCard from "@/components/About/AboutMeDescriptionsCard";
-import { getMeDetails } from "@/lib/notion";
+import { getMeDetails, type MeDetails } from "@/lib/notion";
 import AboutMeDescriptionsCardSkeleton from "./AboutMeDescriptionsCardSkeleton";
 
 function AboutMeDetails() {
-  const [details, setDetails] = useState<MeDetailWithDescriptions[]>([]);
+  const [details, setDetails] = useState<MeDetails[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       const _details = await getMeDetails();

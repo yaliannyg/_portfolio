@@ -5,6 +5,14 @@ export interface Section {
   description?: string;
 }
 
+export interface SectionGroup {
+  section_projects: Section;
+  section_about_me: Section;
+  section_contact: Section;
+  section_skills: Section;
+  [key: string]: Section;
+}
+
 export type CTAType = "Button" | "Navigation" | "Link";
 
 export type CTALabels = Record<CTAType, Record<string, string>>;
@@ -48,7 +56,7 @@ export interface ProjectItem {
   images: string[];
   key: string;
   title: string;
-  subtitle: string
+  subtitle: string;
   technologies: string[];
 }
 
@@ -177,11 +185,11 @@ function mapSection(page: PageObjectResponse): [string, Section] {
   ];
 }
 
-export async function getSections(): Promise<Record<string, Section>> {
+export async function getSections(): Promise<SectionGroup> {
   const data = await notionFetch(`/v1/databases/${DB.sections}/query`, {});
   return Object.fromEntries(
     (data.results as PageObjectResponse[]).map(mapSection),
-  );
+  ) as SectionGroup;
 }
 
 function mapMeDetail(page: PageObjectResponse): MeDetails {
@@ -281,7 +289,10 @@ function mapPortfolioItem(page: PageObjectResponse): ProjectItem {
     id: page.id,
     key: Key.type === "rich_text" ? extractText(Key.rich_text) : "",
     title: Name.type === "title" ? (Name.title[0]?.plain_text ?? "") : "",
-    subtitle: Subtitle.type === "rich_text" ? (Subtitle.rich_text[0]?.plain_text ?? "") : "",
+    subtitle:
+      Subtitle.type === "rich_text"
+        ? (Subtitle.rich_text[0]?.plain_text ?? "")
+        : "",
     description:
       Description.type === "rich_text"
         ? extractText(Description.rich_text)
