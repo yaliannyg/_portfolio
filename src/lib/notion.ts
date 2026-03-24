@@ -254,7 +254,7 @@ export async function getSkillsGrouped(): Promise<SkillsGroup[]> {
   return grouped;
 }
 
-function mapPortfolioItem(page: PageObjectResponse): PortfolioItem {
+function mapPortfolioItem(page: PageObjectResponse): ProjectItem {
   const { Name, Key, Description, Images, Technologies, Subtitle } =
     page.properties as Record<
       string,

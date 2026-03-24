@@ -2,7 +2,7 @@ import { useState } from "react";
 import Modal from "../Modal";
 import { type ProjectItem } from "@/lib/notion";
 import ModalProject from "./ModalProject";
-import { useCTALabels } from "@/context/ctaContext";
+import { useCTALabels } from "@/context/CtaContext";
 
 type ProjectCardProps = Omit<ProjectItem, "key" | "id">;
 function ProjectCard({
