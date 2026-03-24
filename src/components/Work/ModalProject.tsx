@@ -16,7 +16,7 @@ function ModalProject({
 
       <div className="flex gap-3 mb-3">
         {technologies.map((tech) => (
-          <div className="text-[8px] px-2 py-0.5 bg-primary/30 rounded-sm text-gray-400">
+          <div className="text-[8px] px-2 py-0.5 bg-primary/30 rounded-sm text-gray-400" key={tech}>
             <span>{tech}</span>
           </div>
         ))}

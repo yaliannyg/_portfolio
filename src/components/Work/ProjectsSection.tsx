@@ -26,18 +26,23 @@ function ProjectsSection() {
                 images,
                 coverImage,
                 technologies,
+                subtitle,
               }) => (
-                <ProjectCard
-                  key={key}
-                  coverImage={coverImage}
-                  description={description}
-                  images={images}
-                  title={title}
-                  technologies={technologies}
-                />
+                <div key={key}>
+                  <ProjectCard
+                    coverImage={coverImage}
+                    description={description}
+                    images={images}
+                    title={title}
+                    subtitle={subtitle}
+                    technologies={technologies}
+                  />
+                </div>
               ),
             )
-          : [...new Array(5)].map(() => <ProjectCardSkeleton />)}
+          : [...new Array(5)].map((_, index) => (
+              <ProjectCardSkeleton key={index} />
+            ))}
       </>
     </div>
   );

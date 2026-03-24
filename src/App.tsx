@@ -1,58 +1,73 @@
 import { useEffect, useState } from "react";
-import { getProfile, type PortfolioProfile } from "./lib/notion";
+import {
+  getAboutMe,
+  getSections,
+  type AboutMe,
+  type Section,
+} from "./lib/notion";
+import { useCTALabels } from "./context/CtaContext";
+import Navbar from "./components/Navbar";
+import SectionsTitle from "./components/SectionsTitle";
 import AboutMeDetails from "./components/About/AboutMeDetails";
 import AboutMeSection from "./components/About/AboutMeSection";
 import ContactMeSection from "./components/Contact/ContactMeSection";
-import Navbar from "./components/Navbar";
-import SectionsTitle from "./components/SectionsTitle";
 import SkillsGrid from "./components/Skills/SkillsSection";
 import ProjectsSection from "./components/Work/ProjectsSection";
 
 function App() {
-  const [data, setData] = useState<PortfolioProfile>();
+  const labels = useCTALabels();
+  const [aboutMe, setAboutMe] = useState<PortfolioProfile>();
+  const [sections, setSections] = useState<PortfolioSection>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const porfolio: PortfolioProfile = await getProfile();
+      const [_aboutMe, _sections]: [AboutMe, Section] = await Promise.all([
+        getAboutMe(),
+        getSections(),
+      ]);
 
-      setData(porfolio);
+      setAboutMe(_aboutMe);
+      setSections(_sections);
     };
     fetchData();
   }, []);
 
   return (
-    data && (
+    aboutMe &&
+    labels && (
       <main className="text-white bg-linear-to-br from-slate-950 to-slate-800 min-h-screen p-5 relative">
         <div className="md:max-w-4xl m-auto px-10 ">
-          <Navbar cvLink={data.cvLink} logo={data.logo} />
+          <Navbar cvLink={aboutMe.cvLink} logo={aboutMe.logo} cta={labels} />
 
           <section
             className="flex flex-col pb-12 pt-24 w-full gap-4"
             id="about"
           >
             <div>
-              <SectionsTitle description={data.section_about_me.description} />
+              <SectionsTitle
+                description={sections.section_about_me.description}
+              />
               <AboutMeSection
-                aboutMeImg={data.aboutMeImg}
-                aboutMeImgAlt={data.aboutMeImgAlt}
-                name={data.name}
-                position={data.position}
-                summarize={data.summarize}
+                aboutMeImg={aboutMe.aboutMeImg}
+                aboutMeImgAlt={aboutMe.aboutMeImgAlt}
+                name={aboutMe.name}
+                position={aboutMe.position}
+                summarize={aboutMe.summarize}
               />
 
               <div className="flex gap-2 mt-3">
                 <a
                   className="btn rounded-full text-sm text-primary leading-none bg-primary/10"
-                  href={data.cvLink}
+                  href={aboutMe.cvLink}
                   target="_blank"
                 >
-                  Download CV
+                  {labels.Link.download_cv_btn}
                 </a>
                 <a
                   className="btn rounded-full text-sm text-variant leading-none bg-primary"
                   href="#contact"
                 >
-                  Contact Me
+                  {labels.Link.talk_btn}
                 </a>
               </div>
             </div>
@@ -63,8 +78,8 @@ function App() {
 
           <section id="skills" className="pb-12">
             <SectionsTitle
-              description={data.section_skills.description}
-              title={data.section_skills.title}
+              description={sections.section_skills.description}
+              title={sections.section_skills.title}
             />
 
             <SkillsGrid />
@@ -72,15 +87,15 @@ function App() {
 
           <section id="projects" className="pb-12">
             <SectionsTitle
-              description={data.section_projects.description}
-              title={data.section_projects.title}
+              description={sections.section_projects.description}
+              title={sections.section_projects.title}
             />
             <ProjectsSection />
           </section>
           <section id="contact">
             <SectionsTitle
-              description={data.section_contact.description}
-              title={data.section_contact.title}
+              description={sections.section_contact.description}
+              title={sections.section_contact.title}
             />
             <ContactMeSection />
           </section>

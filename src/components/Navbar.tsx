@@ -1,26 +1,29 @@
+import type { CTALabels } from "@/lib/notion";
+
 interface NavbarProps {
   cvLink: string;
   logo: string;
+  cta: CTALabels;
 }
 
-function Navbar({ cvLink, logo }: NavbarProps) {
+function Navbar({ cvLink, logo, cta }: NavbarProps) {
   const navbar = {
     links: [
       {
         href: "header",
-        label: "About",
+        label: cta.Navigation.about,
       },
       {
         href: "skills",
-        label: "Skills",
+        label: cta.Navigation.skills,
       },
       {
         href: "work",
-        label: "Projects",
+        label: cta.Navigation.work,
       },
       {
         href: "contact",
-        label: "Contact",
+        label: cta.Navigation.contact,
       },
     ],
   };
@@ -47,13 +50,13 @@ function Navbar({ cvLink, logo }: NavbarProps) {
           href={cvLink}
           target="_blank"
         >
-          Download CV
+          {cta.Link.download_cv_btn}
         </a>
         <a
           className="btn rounded-full text-sm text-variant leading-none bg-primary"
           href="#contact"
         >
-          Contact Me
+          {cta.Link.talk_btn}
         </a>
       </div>
     </nav>

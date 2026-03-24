@@ -27,7 +27,7 @@ function SkillsGrid() {
 
             <div className="flex flex-col items-center gap-2.5">
               {group.skills.map((_skill) => (
-                <div className="flex w-full items-center leading-none">
+                <div className="flex w-full items-center leading-none" key={_skill.id}>
                   <div className="flex flex-1 gap-2 items-center">
                     <div
                       className={cn(

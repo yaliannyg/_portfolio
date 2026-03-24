@@ -2,6 +2,8 @@ import { useState } from "react";
 import Modal from "../Modal";
 import { type ProjectItem } from "@/lib/notion";
 import ModalProject from "./ModalProject";
+import { useCTALabels } from "@/context/ctaContext";
+
 type ProjectCardProps = Omit<ProjectItem, "key" | "id">;
 function ProjectCard({
   images,
@@ -9,7 +11,10 @@ function ProjectCard({
   description,
   technologies,
   title,
+  subtitle
 }: ProjectCardProps) {
+  const labels = useCTALabels();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   function seeMore() {
     setIsModalOpen(true);
@@ -32,7 +37,7 @@ function ProjectCard({
 
           <div className="flex gap-3 mb-3">
             {technologies.map((tech) => (
-              <div className="text-[8px] px-2 py-0.5 bg-primary/30 rounded-sm text-gray-400">
+              <div className="text-[8px] px-2 py-0.5 bg-primary/30 rounded-sm text-gray-400" key={tech}>
                 <span>{tech}</span>
               </div>
             ))}
@@ -43,7 +48,7 @@ function ProjectCard({
             className="btn rounded-lg w-full capitalize text-xs text-primary leading-none bg-primary/10 border border-primary/10"
             onClick={seeMore}
           >
-            View project →
+            {labels?.Button.view_project_btn}
           </button>
         </div>
       </div>
@@ -52,7 +57,7 @@ function ProjectCard({
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={title}
-        subtitle="Project details"
+        subtitle={subtitle}
       >
         <ModalProject
           images={images}

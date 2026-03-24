@@ -9,8 +9,8 @@ function ProjectCardSkeleton() {
         <div className="mb-3 h-20 bg-slate-800 rounded-2xl"></div>
 
         <div className="flex gap-3 mb-3 h-4">
-          {[...new Array(3)].map((tech) => (
-            <div className="bg-primary/30 rounded-sm h-full w-12">
+          {[...new Array(3)].map((tech,index) => (
+            <div key={index} className="bg-primary/30 rounded-sm h-full w-12">
               <span>{tech}</span>
             </div>
           ))}

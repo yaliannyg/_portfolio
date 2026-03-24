@@ -1,10 +1,15 @@
 import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-interface Section {
+export interface Section {
   title?: string;
   description?: string;
 }
-export interface PortfolioProfile {
+
+export type CTAType = "Button" | "Navigation" | "Link";
+
+export type CTALabels = Record<CTAType, Record<string, string>>;
+
+export interface AboutMe {
   name: string;
   aboutMeImg: string;
   aboutMeImgAlt: string;
@@ -12,10 +17,6 @@ export interface PortfolioProfile {
   logo: string;
   position: string;
   summarize: string;
-  section_about_me: Section;
-  section_skills: Section;
-  section_projects: Section;
-  section_contact: Section;
 }
 
 export interface MeDetails {
@@ -47,6 +48,7 @@ export interface ProjectItem {
   images: string[];
   key: string;
   title: string;
+  subtitle: string
   technologies: string[];
 }
 
@@ -60,10 +62,12 @@ export type Contact = {
 
 const DB = {
   contact: import.meta.env.VITE_NOTION_DB_CONTACT,
+  ctaLabels: import.meta.env.VITE_NOTION_DB_CTA_LABELS,
   details: import.meta.env.VITE_NOTION_DB_ME_DETAILS,
-  me: import.meta.env.VITE_NOTION_DB_ME,
-  skills: import.meta.env.VITE_NOTION_DB_SKILLS,
+  profile: import.meta.env.VITE_NOTION_DB_ME,
   projects: import.meta.env.VITE_NOTION_DB_PROJECTS,
+  sections: import.meta.env.VITE_NOTION_DB_SECTIONS,
+  skills: import.meta.env.VITE_NOTION_DB_SKILLS,
 };
 
 function extractText(richText: Array<{ plain_text: string }> = []): string {
@@ -81,22 +85,103 @@ async function notionFetch(path: string, body?: object) {
   return res.json();
 }
 
-export async function getProfile(): Promise<PortfolioProfile> {
-  const data = await notionFetch(`/v1/blocks/${DB.me}/children`);
+function mapLabel(acc: CTALabels, page: PageObjectResponse): CTALabels {
+  const { Type, Key, Label } = page.properties;
 
-  const codeBlock = data.results.find((block: any) => block.type === "code");
+  const type =
+    Type.type === "select" && Type.select !== null
+      ? (Type.select.name as CTAType)
+      : null;
 
-  if (!codeBlock) throw new Error("Profile JSON block not found");
+  const key =
+    Key.type === "rich_text" ? (Key.rich_text[0]?.plain_text ?? "") : "";
 
-  const raw = extractText(codeBlock.code.rich_text);
+  const label =
+    Label.type === "title" ? (Label.title[0]?.plain_text ?? "") : "";
 
-  // Fix the missing comma in the stored JSON before parsing
-  const fixed = raw.replace(
-    /"summarize":\s*"([^"]*?)"\s*"cv_link"/,
-    '"summarize": "$1", "cv_link"',
+  if (!type || !key) return acc;
+
+  return {
+    ...acc,
+    [type]: {
+      ...acc[type],
+      [key]: label,
+    },
+  };
+}
+
+export async function getCTALabels(): Promise<CTALabels> {
+  const data = await notionFetch(`/v1/databases/${DB.ctaLabels}/query`, {});
+
+  const initial: CTALabels = {
+    Button: {},
+    Navigation: {},
+    Link: {},
+  };
+
+  return (data.results as PageObjectResponse[]).reduce(mapLabel, initial);
+}
+
+function mapAboutMe(page: PageObjectResponse): [string, string] {
+  const keyProp = page.properties["Key"];
+  const valueProp = page.properties["Value"];
+
+  const key =
+    keyProp.type === "title" ? (keyProp.title[0]?.plain_text ?? "") : "";
+
+  const value =
+    valueProp.type === "rich_text"
+      ? (valueProp.rich_text[0]?.plain_text ?? "")
+      : "";
+
+  return [key, value];
+}
+
+export async function getAboutMe(): Promise<AboutMe> {
+  const data = await notionFetch(`/v1/databases/${DB.profile}/query`, {});
+
+  const record = Object.fromEntries(
+    (data.results as PageObjectResponse[]).map(mapAboutMe),
   );
 
-  return JSON.parse(fixed) as PortfolioProfile;
+  return {
+    name: record["name"] ?? "",
+    aboutMeImg: record["aboutMeImg"] ?? "",
+    aboutMeImgAlt: record["aboutMeImgAlt"] ?? "",
+    cvLink: record["cvLink"] ?? "",
+    logo: record["logo"] ?? "",
+    position: record["position"] ?? "",
+    summarize: record["summarize"] ?? "",
+  };
+}
+
+function mapSection(page: PageObjectResponse): [string, Section] {
+  const sectionKey = page.properties["Section Key"];
+  const { Title, Description } = page.properties;
+
+  const key =
+    sectionKey.type === "title" ? (sectionKey.title[0]?.plain_text ?? "") : "";
+
+  return [
+    key,
+    {
+      title:
+        Title.type === "rich_text"
+          ? (Title.rich_text[0]?.plain_text ?? "")
+          : "",
+      description:
+        Description.type === "rich_text"
+          ? (Description.rich_text[0]?.plain_text ?? "")
+          : "",
+    },
+  ];
+}
+
+export async function getSections(): Promise<Record<string, Section>> {
+  const data = await notionFetch(`/v1/databases/${DB.sections}/query`, {});
+  return Object.fromEntries(
+    (data.results as PageObjectResponse[]).map(mapSection),
+  );
 }
 
 function mapMeDetail(page: PageObjectResponse): MeDetails {
@@ -170,7 +255,7 @@ export async function getSkillsGrouped(): Promise<SkillsGroup[]> {
 }
 
 function mapPortfolioItem(page: PageObjectResponse): PortfolioItem {
-  const { Name, Key, Description, Images, Technologies } =
+  const { Name, Key, Description, Images, Technologies, Subtitle } =
     page.properties as Record<
       string,
       Extract<
@@ -196,6 +281,7 @@ function mapPortfolioItem(page: PageObjectResponse): PortfolioItem {
     id: page.id,
     key: Key.type === "rich_text" ? extractText(Key.rich_text) : "",
     title: Name.type === "title" ? (Name.title[0]?.plain_text ?? "") : "",
+    subtitle: Subtitle.type === "rich_text" ? (Subtitle.rich_text[0]?.plain_text ?? "") : "",
     description:
       Description.type === "rich_text"
         ? extractText(Description.rich_text)
