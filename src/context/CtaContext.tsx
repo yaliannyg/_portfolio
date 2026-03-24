@@ -1,12 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { use, createContext, useContext } from "react";
-import { ctaLabelsPromise } from "@/lib/queries";
+import { ctaPromise } from "@/lib/queries";
 import type { CTALabels } from "@/lib/notion";
 
 const CTALabelsContext = createContext<CTALabels | undefined>(undefined);
 
 export function CTALabelsProvider({ children }: { children: React.ReactNode }) {
-  const labels = use(ctaLabelsPromise);
+  const labels = use(ctaPromise);
 
   return (
     <CTALabelsContext.Provider value={labels}>

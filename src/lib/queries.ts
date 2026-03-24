@@ -1,12 +1,20 @@
-import { getAllData } from "./notion";
+import {
+  getAboutMe,
+  getSections,
+  getMeDetails,
+  getSkillsGrouped,
+  getProjects,
+  getContacts,
+  getCTALabels,
+} from "./notion";
 
-const allDataPromise = getAllData();
+export const ctaPromise = getCTALabels();
+export const aboutMePromise = getAboutMe();
 
-export const appDataPromise = allDataPromise.then(
-  (d) => [d.aboutMe, d.sections] as const,
-);
-export const contactsPromise = allDataPromise.then((d) => d.contacts);
-export const projectsPromise = allDataPromise.then((d) => d.projects);
-export const meDetailsPromise = allDataPromise.then((d) => d.meDetails);
-export const skillsGroupedPromise = allDataPromise.then((d) => d.skillsGrouped);
-export const ctaLabelsPromise = allDataPromise.then((d) => d.ctaLabels);
+const afterPriority = Promise.all([ctaPromise, aboutMePromise]);
+
+export const sectionPromise = afterPriority.then(() => getSections());
+export const contactsPromise = afterPriority.then(() => getContacts());
+export const projectsPromise = afterPriority.then(() => getProjects());
+export const meDetailsPromise = afterPriority.then(() => getMeDetails());
+export const skillsGroupedPromise = afterPriority.then(() => getSkillsGrouped());

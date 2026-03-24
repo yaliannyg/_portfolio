@@ -7,20 +7,27 @@ import AboutMeSection from "./components/About/AboutMeSection";
 import ContactMeSection from "./components/Contact/ContactMeSection";
 import SkillsGrid from "./components/Skills/SkillsGrid";
 import ProjectsSection from "./components/Work/ProjectsSection";
-import { appDataPromise } from "./lib/queries";
+import { aboutMePromise, sectionPromise } from "./lib/queries";
 import AboutMeDescriptionsCardSkeleton from "./components/About/AboutMeDescriptionsCardSkeleton";
 import ProjectCardSkeleton from "./components/Work/ProjectCardSkeleton";
 import SkillsGridSkeleton from "./components/Skills/SkillsGridSkeleton";
 import ContactMeSectionSkeleton from "./components/Contact/ContactMeSectionSkeleton";
 
+type SectionKey = "section_about_me" | "section_skills" | "section_projects" | "section_contact";
+
+function SectionHeader({ sectionKey }: { sectionKey: SectionKey }) {
+  const sections = use(sectionPromise);
+  const section = sections[sectionKey];
+  return <SectionsTitle description={section.description} title={section.title} />;
+}
+
 function App() {
   const labels = useCTALabels();
-  const [aboutMe, sections] = use(appDataPromise);
+  const aboutMe = use(aboutMePromise);
 
   return (
     aboutMe &&
-    labels &&
-    sections && (
+    labels && (
       <main className="text-white bg-linear-to-br from-slate-950 to-slate-800 min-h-screen p-5 relative">
         <div className="md:max-w-4xl m-auto px-10 ">
           <Navbar cvLink={aboutMe.cvLink} logo={aboutMe.logo} cta={labels} />
@@ -30,9 +37,9 @@ function App() {
             id="about"
           >
             <div>
-              <SectionsTitle
-                description={sections.section_about_me.description}
-              />
+              <Suspense fallback={<SectionsTitle />}>
+                <SectionHeader sectionKey="section_about_me" />
+              </Suspense>
               <AboutMeSection
                 aboutMeImg={aboutMe.aboutMeImg}
                 aboutMeImgAlt={aboutMe.aboutMeImgAlt}
@@ -73,20 +80,18 @@ function App() {
           </section>
 
           <section id="skills" className="pb-12">
-            <SectionsTitle
-              description={sections.section_skills.description}
-              title={sections.section_skills.title}
-            />
+            <Suspense fallback={<SectionsTitle />}>
+              <SectionHeader sectionKey="section_skills" />
+            </Suspense>
             <Suspense fallback={<SkillsGridSkeleton />}>
               <SkillsGrid />
             </Suspense>
           </section>
 
           <section id="projects" className="pb-12">
-            <SectionsTitle
-              description={sections.section_projects.description}
-              title={sections.section_projects.title}
-            />
+            <Suspense fallback={<SectionsTitle />}>
+              <SectionHeader sectionKey="section_projects" />
+            </Suspense>
             <Suspense
               fallback={
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-5 w-full m-auto h-fit">
@@ -100,10 +105,9 @@ function App() {
             </Suspense>
           </section>
           <section id="contact">
-            <SectionsTitle
-              description={sections.section_contact.description}
-              title={sections.section_contact.title}
-            />
+            <Suspense fallback={<SectionsTitle />}>
+              <SectionHeader sectionKey="section_contact" />
+            </Suspense>
             <Suspense fallback={<ContactMeSectionSkeleton />}>
               <ContactMeSection />
             </Suspense>
