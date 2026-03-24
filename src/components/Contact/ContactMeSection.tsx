@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
-import { getContacts, type Contact } from "@/lib/notion";
+import { use } from "react";
 import ContactCard from "../Contact/ContactCard";
+import { contactsPromise } from "@/lib/queries";
 
 function ContactMeSection() {
-  const [info, setInfo] = useState<Contact[]>([]);
-
   function redirectTo(link: string) {
     window.open(link);
   }
-  useEffect(() => {
-    const fecthData = async () => {
-      const contacts = await getContacts();
-
-      setInfo(contacts);
-    };
-    fecthData();
-  }, []);
+  const contactInfo = use(contactsPromise);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-5">
-      {info.map((contact) => (
+      {contactInfo.map((contact) => (
         <button
           className="border-0 p-0"
           key={contact.id}

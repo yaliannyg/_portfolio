@@ -1,19 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import { getCTALabels, type CTALabels } from "@/lib/notion";
-import { createContext, useContext, useState, useEffect } from "react";
+import { use, createContext, useContext } from "react";
+import { ctaLabelsPromise } from "@/lib/queries";
+import type { CTALabels } from "@/lib/notion";
 
-const CTALabelsContext = createContext<CTALabels | null | undefined>(undefined);
+const CTALabelsContext = createContext<CTALabels | undefined>(undefined);
 
 export function CTALabelsProvider({ children }: { children: React.ReactNode }) {
-  const [labels, setLabels] = useState<CTALabels | null>(null);
-
-  useEffect(() => {
-    const fetchCTAs = async () => {
-      const _ctas = await getCTALabels();
-      setLabels(_ctas);
-    };
-    fetchCTAs();
-  }, []);
+  const labels = use(ctaLabelsPromise);
 
   return (
     <CTALabelsContext.Provider value={labels}>

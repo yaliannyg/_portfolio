@@ -37,7 +37,10 @@ const handler: Handler = async (event) => {
 
   return {
     statusCode: response.status,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "public, max-age=300, stale-while-revalidate=600",
+    },
     body: JSON.stringify(data),
   };
 };

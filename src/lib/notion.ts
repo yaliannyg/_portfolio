@@ -338,7 +338,7 @@ function mapContact(page: PageObjectResponse): Contact {
   };
 }
 
-export async function getContacts() {
+export async function getContacts(): Promise<Contact[]> {
   const data = await notionFetch(`/v1/databases/${DB.contact}/query`, {});
   return data.results.map(mapContact);
 }

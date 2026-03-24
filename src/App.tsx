@@ -1,36 +1,21 @@
-import { useEffect, useState } from "react";
-import {
-  getAboutMe,
-  getSections,
-  type AboutMe,
-  type SectionGroup,
-} from "./lib/notion";
+import { use, Suspense } from "react";
 import { useCTALabels } from "./context/CtaContext";
 import Navbar from "./components/Navbar";
 import SectionsTitle from "./components/SectionsTitle";
 import AboutMeDetails from "./components/About/AboutMeDetails";
 import AboutMeSection from "./components/About/AboutMeSection";
 import ContactMeSection from "./components/Contact/ContactMeSection";
-import SkillsGrid from "./components/Skills/SkillsSection";
+import SkillsGrid from "./components/Skills/SkillsGrid";
 import ProjectsSection from "./components/Work/ProjectsSection";
+import { appDataPromise } from "./lib/queries";
+import AboutMeDescriptionsCardSkeleton from "./components/About/AboutMeDescriptionsCardSkeleton";
+import ProjectCardSkeleton from "./components/Work/ProjectCardSkeleton";
+import SkillsGridSkeleton from "./components/Skills/SkillsGridSkeleton";
+import ContactMeSectionSkeleton from "./components/Contact/ContactMeSectionSkeleton";
 
 function App() {
   const labels = useCTALabels();
-  const [aboutMe, setAboutMe] = useState<AboutMe>();
-  const [sections, setSections] = useState<SectionGroup>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const [_aboutMe, _sections]: [AboutMe, SectionGroup] = await Promise.all([
-        getAboutMe(),
-        getSections(),
-      ]);
-
-      setAboutMe(_aboutMe);
-      setSections(_sections);
-    };
-    fetchData();
-  }, []);
+  const [aboutMe, sections] = use(appDataPromise);
 
   return (
     aboutMe &&
@@ -73,7 +58,17 @@ function App() {
               </div>
             </div>
             <div>
-              <AboutMeDetails />
+              <Suspense
+                fallback={
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 h-max">
+                    {[...new Array(3)].map((_, i) => (
+                      <AboutMeDescriptionsCardSkeleton key={i} />
+                    ))}
+                  </div>
+                }
+              >
+                <AboutMeDetails />
+              </Suspense>
             </div>
           </section>
 
@@ -82,8 +77,9 @@ function App() {
               description={sections.section_skills.description}
               title={sections.section_skills.title}
             />
-
-            <SkillsGrid />
+            <Suspense fallback={<SkillsGridSkeleton />}>
+              <SkillsGrid />
+            </Suspense>
           </section>
 
           <section id="projects" className="pb-12">
@@ -91,14 +87,26 @@ function App() {
               description={sections.section_projects.description}
               title={sections.section_projects.title}
             />
-            <ProjectsSection />
+            <Suspense
+              fallback={
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-5 w-full m-auto h-fit">
+                  {[...new Array(5)].map((_, i) => (
+                    <ProjectCardSkeleton key={i} />
+                  ))}
+                </div>
+              }
+            >
+              <ProjectsSection />
+            </Suspense>
           </section>
           <section id="contact">
             <SectionsTitle
               description={sections.section_contact.description}
               title={sections.section_contact.title}
             />
-            <ContactMeSection />
+            <Suspense fallback={<ContactMeSectionSkeleton />}>
+              <ContactMeSection />
+            </Suspense>
           </section>
         </div>
       </main>
