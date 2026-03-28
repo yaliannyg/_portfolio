@@ -38,7 +38,7 @@ function AboutMeSection({
             <p>{position}</p>
           </div>
           <div className="text-gray-400 text-sm font-light max-w-xl leading-6">
-            <p>{summarize}</p>
+            <p className="whitespace-break-spaces">{summarize}</p>
           </div>
         </div>
         <div className="w-52 h-60 ">

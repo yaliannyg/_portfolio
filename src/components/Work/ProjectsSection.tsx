@@ -16,8 +16,9 @@ function ProjectsSection() {
           coverImage,
           technologies,
           subtitle,
+          order,
         }) => (
-          <div key={key}>
+          <div key={key} style={{ order: order }}>
             <ProjectCard
               coverImage={coverImage}
               description={description}

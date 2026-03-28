@@ -48,9 +48,9 @@ export default function Modal({
       <div className="relative z-10 rounded-xl bg-slate-800 p-7 shadow-xl w-md text-white ">
         {/* Header */}
         <div className="flex flex-col mb-3.5 relative gap-1.5">
-          <h2 className="text-base font-semibold text-white">{title}</h2>
+          <p className="text-[10px] text-[#ffffff4d] uppercase">{subtitle}</p>
+          <h2 className="text-base font-semibold text-primary">{title}</h2>
 
-          <h6 className="text-[10px] text-primary">{subtitle} </h6>
           <button
             onClick={onClose}
             className="-top-4 -right-2 absolute rounded-lg p-1.5 bg-primary/20 transition-colors text-primary"

@@ -22,7 +22,7 @@ function SmallCard({ description, icon, title }: MeDetails) {
       </div>
       <div className="flex flex-col flex-1 gap-1">
         <span className="font-semibold text-xs text-gray-400">{title}</span>
-        <span className="text-xs">{description}</span>
+        <span className="text-xs whitespace-break-spaces">{description}</span>
       </div>
     </div>
   );

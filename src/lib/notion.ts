@@ -55,6 +55,7 @@ export interface ProjectItem {
   id: string;
   images: string[];
   key: string;
+  order: number;
   title: string;
   subtitle: string;
   technologies: string[];
@@ -272,6 +273,11 @@ function mapPortfolioItem(page: PageObjectResponse): ProjectItem {
       >
     >;
 
+  const orderProp = page.properties["Order"] as Extract<
+    PageObjectResponse["properties"][string],
+    { type: "number" }
+  >;
+
   const coverImageProp = page.properties["Cover Image"] as Extract<
     PageObjectResponse["properties"][string],
     { type: "url" }
@@ -288,6 +294,7 @@ function mapPortfolioItem(page: PageObjectResponse): ProjectItem {
   return {
     id: page.id,
     key: Key.type === "rich_text" ? extractText(Key.rich_text) : "",
+    order: orderProp.type === "number" ? (orderProp.number ?? 0) : 0,
     title: Name.type === "title" ? (Name.title[0]?.plain_text ?? "") : "",
     subtitle:
       Subtitle.type === "rich_text"

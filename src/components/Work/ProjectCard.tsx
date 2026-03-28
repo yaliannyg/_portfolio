@@ -4,14 +4,14 @@ import { type ProjectItem } from "@/lib/notion";
 import ModalProject from "./ModalProject";
 import { useCTALabels } from "@/context/CtaContext";
 
-type ProjectCardProps = Omit<ProjectItem, "key" | "id">;
+type ProjectCardProps = Omit<ProjectItem, "key" | "id" | "order">;
 function ProjectCard({
   images,
   coverImage,
   description,
   technologies,
   title,
-  subtitle
+  subtitle,
 }: ProjectCardProps) {
   const labels = useCTALabels();
 
@@ -31,13 +31,17 @@ function ProjectCard({
       </div>
       <div className="px-3.5 py-4 flex-1 flex flex-col">
         <div id="content" className="flex flex-col ">
+          <p className="text-[10px] text-[#ffffff4d] uppercase">{subtitle}</p>
           <p className="text-primary font-semibold text-sm mb-1.5">{title}</p>
 
-          <div className="text-gray-400 text-xs mb-3">{description}</div>
+          <p className="text-gray-400 text-xs mb-3">{description}</p>
 
           <div className="flex gap-3 mb-3">
             {technologies.map((tech) => (
-              <div className="text-[8px] px-2 py-0.5 bg-primary/30 rounded-sm text-gray-400" key={tech}>
+              <div
+                className="text-[8px] px-2 py-0.5 bg-primary/30 rounded-sm text-gray-400"
+                key={tech}
+              >
                 <span>{tech}</span>
               </div>
             ))}
