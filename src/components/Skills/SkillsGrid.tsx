@@ -34,7 +34,7 @@ function SkillsGrid() {
                   <div className="text-xs">{_skill.name}</div>
                 </div>
                 <div className="font-semibold text-[10px] text-gray-400 ">
-                  {_skill.level}
+                  {_skill.level}・<span>{_skill.years} years</span>
                 </div>
               </div>
             ))}

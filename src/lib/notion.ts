@@ -42,6 +42,7 @@ export interface Skill {
   name: string;
   category: SkillCategory;
   level: SkillLevel;
+  years: number | null;
 }
 
 export interface SkillsGroup {
@@ -227,7 +228,7 @@ export async function getMeDetails(): Promise<MeDetails[]> {
 }
 
 function mapSkill(page: PageObjectResponse): Skill {
-  const { Name, Category, Level } = page.properties;
+  const { Name, Category, Level, Years } = page.properties;
 
   return {
     id: page.id,
@@ -240,6 +241,7 @@ function mapSkill(page: PageObjectResponse): Skill {
       Level.type === "select"
         ? ((Level.select?.name ?? "") as SkillLevel)
         : ("" as SkillLevel),
+    years: Years?.type === "number" ? (Years.number ?? null) : null,
   };
 }
 
