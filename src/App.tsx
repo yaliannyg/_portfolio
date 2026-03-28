@@ -12,6 +12,7 @@ import AboutMeDescriptionsCardSkeleton from "./components/About/AboutMeDescripti
 import ProjectCardSkeleton from "./components/Work/ProjectCardSkeleton";
 import SkillsGridSkeleton from "./components/Skills/SkillsGridSkeleton";
 import ContactMeSectionSkeleton from "./components/Contact/ContactMeSectionSkeleton";
+import Footer from "./components/Footer";
 
 type SectionKey = "section_about_me" | "section_skills" | "section_projects" | "section_contact";
 
@@ -113,6 +114,7 @@ function App() {
             </Suspense>
           </section>
         </div>
+        <Footer />
       </main>
     )
   );
