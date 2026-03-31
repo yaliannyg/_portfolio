@@ -44,7 +44,7 @@ function Navbar({ cvLink, logo, cta }: NavbarProps) {
         ))}
       </ul>
 
-      <div className="flex gap-2">
+      <div className="sm:flex gap-2 hidden">
         <a
           className="btn rounded-full text-sm text-primary leading-none bg-primary/10"
           href={cvLink}

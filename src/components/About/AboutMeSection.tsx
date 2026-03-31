@@ -17,7 +17,7 @@ function AboutMeSection({
 }: AboutMeSectionProps) {
   return (
     <div className="flex flex-col w-full">
-      <div className="flex gap-3 justify-center items-center">
+      <div className="flex flex-col-reverse sm:flex-row gap-3 justify-center items-center">
         <div className="flex-1 space-y-2">
           <div className="flex flex-col tracking-widest gap-2">
             <div>
@@ -41,11 +41,11 @@ function AboutMeSection({
             <p className="whitespace-break-spaces">{summarize}</p>
           </div>
         </div>
-        <div className="w-52 h-60 ">
+        <div className="w-auto h-40 sm:w-52 sm:h-60 ">
           <img
             src={aboutMeImg}
             alt={aboutMeImgAlt}
-            className="rounded-2xl size-full shadow-2xs  "
+            className="sm:rounded-2xl rounded-full size-full shadow-2xs  "
           />
         </div>
       </div>
