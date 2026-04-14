@@ -1,73 +1,143 @@
-# React + TypeScript + Vite
+# Yalianny Gonzalez — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio site built with React 19 and TypeScript, powered by Notion as a headless CMS and deployed on Netlify.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?logo=tailwindcss&logoColor=white)
+![Netlify](https://img.shields.io/badge/Deployed_on-Netlify-00C7B7?logo=netlify&logoColor=white)
+![Notion](https://img.shields.io/badge/CMS-Notion_API-000000?logo=notion&logoColor=white)
+![ESLint](https://img.shields.io/badge/Linter-ESLint_9-4B32C3?logo=eslint&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Table of Contents
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Environment Variables](#environment-variables)
+- [Installation & Local Development](#installation--local-development)
+- [Building for Production](#building-for-production)
+- [Deployment](#deployment)
+- [Linting](#linting)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Layer | Technology | Version |
+|---|---|---|
+| UI Framework | React | 19.2 |
+| Language | TypeScript | 5.9 |
+| Build Tool | Vite | 7.2 |
+| Styling | Tailwind CSS | 4.1 |
+| Icons | Tabler Icons | 3.40 |
+| CMS | Notion API (`@notionhq/client`) | 5.14 |
+| Serverless | Netlify Functions | 5.1 |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
+```
+portfolio_fe/
+├── src/
+│   ├── components/         # Feature components (About, Contact, Work, Skills)
+│   ├── context/            # React Context (CTA labels)
+│   ├── lib/                # Notion API helpers and data queries
+│   ├── netlify/
+│   │   └── functions/      # Serverless function — Notion proxy
+│   ├── assets/             # Static assets
+│   ├── App.tsx             # Root component with Suspense layout
+│   └── main.tsx            # React entry point
+├── public/
+├── index.html
+├── netlify.toml            # Netlify deployment config
+├── vite.config.ts
+└── package.json
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Node.js** LTS (v20+)
+- A **Notion** account with the required databases set up and a Notion integration token
+- **Netlify CLI** (optional, for running serverless functions locally): `npm i -g netlify-cli`
+
+---
+
+## Environment Variables
+
+Create a `.env` file at the root of `portfolio_fe/` with the following variables:
+
+| Variable | Description |
+|---|---|
+| `NOTION_TOKEN` | Notion integration bearer token |
+| `VITE_NOTION_DB_CONTACT` | Notion DB ID — contact entries |
+| `VITE_NOTION_DB_ME` | Notion DB ID — profile |
+| `VITE_NOTION_DB_ME_DETAILS` | Notion DB ID — profile details |
+| `VITE_NOTION_DB_ME_DESCRIPTIONS` | Notion DB ID — bio descriptions |
+| `VITE_NOTION_DB_SKILLS` | Notion DB ID — skills |
+| `VITE_NOTION_DB_PROJECTS` | Notion DB ID — projects |
+| `VITE_NOTION_DB_SECTIONS` | Notion DB ID — section metadata |
+| `VITE_NOTION_DB_CTA_LABELS` | Notion DB ID — CTA button labels |
+
+> Variables prefixed with `VITE_` are exposed to the browser. `NOTION_TOKEN` is server-side only and used exclusively by the Netlify function.
+
+---
+
+## Installation & Local Development
+
+```bash
+# From the repo root
+cd portfolio_fe
+
+# Install dependencies
+npm install
+
+# Generate the env file and fill in your Notion credentials
+touch .env
+
+# Start the dev server (exposed on local network)
+npm run dev
+```
+
+The Vite dev server proxies `/notion/*` requests to the local Netlify function, so Notion data loads without needing the Netlify CLI during development.
+
+---
+
+## Building for Production
+
+```bash
+# Type-check and build to dist/
+npm run build
+
+# Preview the production build locally
+npm run preview
+```
+
+---
+
+## Deployment
+
+The project is deployed on **Netlify** using the configuration in `netlify.toml`:
+
+- **Publish directory:** `dist/`
+- **Serverless functions:** `src/netlify/functions/`
+- API requests to `/notion/*` are redirected to `/.netlify/functions/notion`
+- All routes fall back to `index.html` for SPA navigation
+
+To deploy:
+1. Push to the connected Git branch — Netlify triggers a build automatically.
+2. Set all environment variables listed above in **Netlify → Site Settings → Environment Variables**.
+
+---
+
+## Linting
+
+```bash
+npm run lint
 ```
