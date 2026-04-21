@@ -3,8 +3,8 @@
   functions = "src/netlify/functions"
 
 [[redirects]]
-  from = "/notion/*"
-  to = "/.netlify/functions/notion"
+  from = "/airtable/*"
+  to = "/.netlify/functions/airtable"
   status = 200
 
 [[redirects]]

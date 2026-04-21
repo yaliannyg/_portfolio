@@ -6,7 +6,7 @@ import {
   getProjects,
   getContacts,
   getCTALabels,
-} from "./notion";
+} from "./airtable";
 
 export const ctaPromise = getCTALabels();
 export const aboutMePromise = getAboutMe();

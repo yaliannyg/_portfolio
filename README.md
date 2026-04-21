@@ -1,13 +1,13 @@
 # Yalianny Gonzalez — Portfolio
 
-A personal portfolio site built with React 19 and TypeScript, powered by Notion as a headless CMS and deployed on Netlify.
+A personal portfolio site built with React 19 and TypeScript, powered by Airtable as a headless CMS and deployed on Netlify.
 
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?logo=vite&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?logo=tailwindcss&logoColor=white)
 ![Netlify](https://img.shields.io/badge/Deployed_on-Netlify-00C7B7?logo=netlify&logoColor=white)
-![Notion](https://img.shields.io/badge/CMS-Notion_API-000000?logo=notion&logoColor=white)
+![Airtable](https://img.shields.io/badge/CMS-Airtable_API-18BFFF?logo=airtable&logoColor=white)
 ![ESLint](https://img.shields.io/badge/Linter-ESLint_9-4B32C3?logo=eslint&logoColor=white)
 
 ---
@@ -34,7 +34,7 @@ A personal portfolio site built with React 19 and TypeScript, powered by Notion 
 | Build Tool | Vite | 7.2 |
 | Styling | Tailwind CSS | 4.1 |
 | Icons | Tabler Icons | 3.40 |
-| CMS | Notion API (`@notionhq/client`) | 5.14 |
+| CMS | Airtable API | — |
 | Serverless | Netlify Functions | 5.1 |
 
 ---
@@ -46,9 +46,9 @@ portfolio_fe/
 ├── src/
 │   ├── components/         # Feature components (About, Contact, Work, Skills)
 │   ├── context/            # React Context (CTA labels)
-│   ├── lib/                # Notion API helpers and data queries
+│   ├── lib/                # Airtable API helpers and data queries
 │   ├── netlify/
-│   │   └── functions/      # Serverless function — Notion proxy
+│   │   └── functions/      # Serverless function — Airtable proxy
 │   ├── assets/             # Static assets
 │   ├── App.tsx             # Root component with Suspense layout
 │   └── main.tsx            # React entry point
@@ -64,7 +64,7 @@ portfolio_fe/
 ## Prerequisites
 
 - **Node.js** LTS (v20+)
-- A **Notion** account with the required databases set up and a Notion integration token
+- An **Airtable** account with the required base and tables set up, and a personal access token
 - **Netlify CLI** (optional, for running serverless functions locally): `npm i -g netlify-cli`
 
 ---
@@ -75,17 +75,10 @@ Create a `.env` file at the root of `portfolio_fe/` with the following variables
 
 | Variable | Description |
 |---|---|
-| `NOTION_TOKEN` | Notion integration bearer token |
-| `VITE_NOTION_DB_CONTACT` | Notion DB ID — contact entries |
-| `VITE_NOTION_DB_ME` | Notion DB ID — profile |
-| `VITE_NOTION_DB_ME_DETAILS` | Notion DB ID — profile details |
-| `VITE_NOTION_DB_ME_DESCRIPTIONS` | Notion DB ID — bio descriptions |
-| `VITE_NOTION_DB_SKILLS` | Notion DB ID — skills |
-| `VITE_NOTION_DB_PROJECTS` | Notion DB ID — projects |
-| `VITE_NOTION_DB_SECTIONS` | Notion DB ID — section metadata |
-| `VITE_NOTION_DB_CTA_LABELS` | Notion DB ID — CTA button labels |
+| `AIRTABLE_TOKEN` | Airtable personal access token (server-side only) |
+| `VITE_AIRTABLE_BASE_ID` | Airtable base ID |
 
-> Variables prefixed with `VITE_` are exposed to the browser. `NOTION_TOKEN` is server-side only and used exclusively by the Netlify function.
+> `VITE_AIRTABLE_BASE_ID` is exposed to the browser to construct API paths. `AIRTABLE_TOKEN` is server-side only and used exclusively by the Netlify function.
 
 ---
 
@@ -98,14 +91,14 @@ cd portfolio_fe
 # Install dependencies
 npm install
 
-# Generate the env file and fill in your Notion credentials
+# Generate the env file and fill in your Airtable credentials
 touch .env
 
 # Start the dev server (exposed on local network)
 npm run dev
 ```
 
-The Vite dev server proxies `/notion/*` requests to the local Netlify function, so Notion data loads without needing the Netlify CLI during development.
+The Vite dev server proxies `/airtable/*` requests to the local Netlify function, so Airtable data loads without needing the Netlify CLI during development.
 
 ---
 
@@ -127,7 +120,7 @@ The project is deployed on **Netlify** using the configuration in `netlify.toml`
 
 - **Publish directory:** `dist/`
 - **Serverless functions:** `src/netlify/functions/`
-- API requests to `/notion/*` are redirected to `/.netlify/functions/notion`
+- API requests to `/airtable/*` are redirected to `/.netlify/functions/airtable`
 - All routes fall back to `index.html` for SPA navigation
 
 To deploy:

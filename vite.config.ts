@@ -15,30 +15,12 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
-        "/notion": {
-          target: "https://api.notion.com",
+        "/airtable": {
+          target: "https://api.airtable.com",
           changeOrigin: true,
-          rewrite: (path) => {
-            const DB_ALIASES: Record<string, string> = {
-              contact: env.VITE_NOTION_DB_CONTACT,
-              ctaLabels: env.VITE_NOTION_DB_CTA_LABELS,
-              details: env.VITE_NOTION_DB_ME_DETAILS,
-              meDescriptions: env.VITE_NOTION_DB_ME_DESCRIPTIONS,
-              profile: env.VITE_NOTION_DB_ME,
-              projects: env.VITE_NOTION_DB_PROJECTS,
-              sections: env.VITE_NOTION_DB_SECTIONS,
-              skills: env.VITE_NOTION_DB_SKILLS,
-            };
-            return path
-              .replace(/^\/notion/, "")
-              .replace(/\/v1\/databases\/([^/]+)\//, (_, alias) => {
-                const id = DB_ALIASES[alias] ?? alias;
-                return `/v1/databases/${id}/`;
-              });
-          },
+          rewrite: (path) => path.replace(/^\/airtable/, ""),
           headers: {
-            Authorization: `Bearer ${env.NOTION_TOKEN}`,
-            "Notion-Version": "2022-06-28",
+            Authorization: `Bearer ${env.AIRTABLE_TOKEN}`,
           },
         },
       },
