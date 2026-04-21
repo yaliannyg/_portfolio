@@ -10,7 +10,7 @@ const handler: Handler = async (event) => {
       Authorization: `Bearer ${process.env.AIRTABLE_TOKEN}`,
       "Content-Type": "application/json",
     },
-    body: event.body ?? undefined,
+    body: ["GET", "HEAD"].includes(event.httpMethod) ? undefined : (event.body ?? undefined),
   });
 
   const data = await response.json();
