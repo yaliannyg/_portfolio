@@ -2,10 +2,9 @@
   publish = "dist"
   functions = "src/netlify/functions"
 
-[[redirects]]
-  from = "/airtable/*"
-  to = "/.netlify/functions/airtable"
-  status = 200
+[[edge_functions]]
+  function = "airtable"
+  path = "/airtable/*"
 
 [[redirects]]
   from = "/*"
