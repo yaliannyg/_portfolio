@@ -1,8 +1,6 @@
-import type { Context } from "@netlify/edge-functions";
-
 declare const Deno: { env: { get(key: string): string | undefined } };
 
-export default async function handler(request: Request, _context: Context): Promise<Response> {
+export default async function handler(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const airtablePath = url.pathname.replace(/^\/airtable/, "");
   const upstreamUrl = `https://api.airtable.com${airtablePath}${url.search}`;
@@ -21,14 +19,16 @@ export default async function handler(request: Request, _context: Context): Prom
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: ["GET", "HEAD"].includes(request.method) ? null : await request.text(),
+    body: ["GET", "HEAD"].includes(request.method)
+      ? null
+      : await request.text(),
   });
 
   return new Response(await upstreamResponse.text(), {
     status: upstreamResponse.status,
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=300, stale-while-revalidate=600",
+      "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=86400",
     },
   });
 }

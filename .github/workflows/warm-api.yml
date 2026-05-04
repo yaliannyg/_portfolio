@@ -1,0 +1,20 @@
+name: Warm API
+
+on:
+  schedule:
+    - cron: "0 * * * *" # every hour
+  workflow_dispatch: # allows manual run
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping API
+        run: |
+          curl --max-time 10 -s -o /dev/null https://yalianny-gonzalez.netlify.app/airtable/v0/appuZ4e1haIym5Fbb/ctaLabels
+          curl --max-time 10 -s -o /dev/null https://yalianny-gonzalez.netlify.app/airtable/v0/appuZ4e1haIym5Fbb/aboutme
+          curl --max-time 10 -s -o /dev/null https://yalianny-gonzalez.netlify.app/airtable/v0/appuZ4e1haIym5Fbb/projects
+          curl --max-time 10 -s -o /dev/null https://yalianny-gonzalez.netlify.app/airtable/v0/appuZ4e1haIym5Fbb/details
+          curl --max-time 10 -s -o /dev/null https://yalianny-gonzalez.netlify.app/airtable/v0/appuZ4e1haIym5Fbb/skills
+
