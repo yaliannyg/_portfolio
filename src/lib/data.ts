@@ -80,7 +80,7 @@ const TABLES = {
   skills: "skills",
 };
 
-async function fetchData(table: string): Promise<T> {
+async function fetchData<T>(table: string): Promise<T> {
   const res = await fetch(`${BASE}/${table}.json`);
   if (!res.ok) throw new Error(`Error: ${res.status}`);
   return res.json();
@@ -103,24 +103,21 @@ export async function getSections(): Promise<SectionGroup> {
 }
 
 export async function getMeDetails(): Promise<MeDetails[]> {
-  const data = await fetchData<MeDetails>(TABLES.details);
+  const data = await fetchData<MeDetails[]>(TABLES.details);
   return data;
 }
 
-export async function getSkills(): Promise<Skill[]> {
-  type a = Skill[];
-  const data = await fetchData<a>(TABLES.skills);
+export async function getSkills(): Promise<SkillsGroup[]> {
+  const data = await fetchData<SkillsGroup[]>(TABLES.skills);
   return data;
 }
 
 export async function getProjects(): Promise<ProjectItem[]> {
-  type a = ProjectItem[];
-  const data = await fetchData<a>(TABLES.projects);
+  const data = await fetchData<ProjectItem[]>(TABLES.projects);
   return data;
 }
 
 export async function getContacts(): Promise<Contact[]> {
-  type a = Contact[];
-  const data = await fetchData<a>(TABLES.contact);
+  const data = await fetchData<Contact[]>(TABLES.contact);
   return data;
 }

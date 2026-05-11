@@ -3,20 +3,21 @@ import { cn } from "@/utils";
 import { use } from "react";
 
 function SkillsGrid() {
-  const skills = use(skillsGroupedPromise);
+  const skillsGroups = use(skillsGroupedPromise);
+
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-rows-1 gap-3 w-full m-auto">
-      {skills.map((group) => (
+      {skillsGroups.map(({ category, skills }) => (
         <div
-          key={group.category}
+          key={`${category}`}
           className="flex flex-col bg-primary/10 rounded-xl p-4 border border-primary/20 capitalize gap-3 text-sm"
         >
           <span className="font-semibold text-gray-400 text-sm uppercase">
-            {group.category}
+            {category}
           </span>
 
           <div className="flex flex-col items-center gap-2.5">
-            {group.skills.map((_skill) => (
+            {skills.map((_skill) => (
               <div
                 className="flex w-full items-center leading-none"
                 key={_skill.id}

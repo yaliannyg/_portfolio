@@ -1,20 +1,14 @@
 import { cn } from "@/utils";
 
 interface AboutMeSectionProps {
-  aboutMeImg: string;
-  aboutMeImgAlt: string;
+  aboutMeImg?: string;
+  aboutMeImgAlt?: string;
   name: string;
   position: string;
   summarize: string;
 }
 
-function AboutMeSection({
-  aboutMeImg,
-  aboutMeImgAlt,
-  name,
-  position,
-  summarize,
-}: AboutMeSectionProps) {
+function AboutMeSection({ name, position, summarize }: AboutMeSectionProps) {
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col-reverse sm:flex-row gap-3 justify-center items-center">
