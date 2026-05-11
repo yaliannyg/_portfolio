@@ -2,14 +2,17 @@ import AboutMeDescriptionsCardSkeleton from "./About/AboutMeDescriptionsCardSkel
 import AboutMeSectionSkeleton from "./About/AboutMeSectionSkeleton";
 import ContactMeSectionSkeleton from "./Contact/ContactMeSectionSkeleton";
 import Footer from "./Footer";
+import Loader from "./Loader";
 import SectionsTitle from "./SectionsTitle";
 import SkillsGridSkeleton from "./Skills/SkillsGridSkeleton";
 import ProjectCardSkeleton from "./Work/ProjectCardSkeleton";
 
 function LandingPageSkeleton() {
   return (
-    <main className="text-white bg-linear-to-br from-slate-950 to-slate-800 min-h-screen p-5 relative">
-      <div className="md:max-w-4xl m-auto px-10">
+    <main className="text-white bg-linear-to-br from-slate-950 to-slate-800 max-h-screen p-5 relative overflow-hidden">
+      <Loader />
+
+      <div className="md:max-w-4xl m-auto px-10 bg-transparent">
         <nav className="fixed w-full flex items-center py-2 gap-2 bg-transparent backdrop-blur-xl rounded-full top-2 z-50 left-1/2 -translate-x-1/2 px-5 animate-pulse">
           <div className="bg-slate-800 h-7 w-20 rounded-full"></div>
           <ul className="flex mx-auto gap-2">

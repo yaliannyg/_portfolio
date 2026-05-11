@@ -21,3 +21,39 @@
 .blur-char {
   animation-delay: calc(var(--char-index) * 0.05s);
 }
+
+.pixel-loader {
+  --size: 165px; /* ← change only this */
+
+  width: var(--size);
+  height: var(--size);
+  background-image: url("../assets/loader.png");
+  background-repeat: no-repeat;
+
+  /* background-size: calc(var(--size) * 4) var(--size); 4 = frame count */
+  background-size: cover;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+
+  animation: play-frames 1500ms steps(4) infinite;
+}
+
+/* 309 */
+@keyframes play-frames {
+  from {
+    background-position: 0px 0px;
+  }
+
+  /* background-position: calc(var(--size) * -4) 0px; */
+  to {
+    background-position: 100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-loader {
+    animation: none;
+
+    background-position: 0px 0px;
+  }
+}

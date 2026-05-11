@@ -16,7 +16,6 @@ function AboutMeSectionSkeleton() {
             <div className="bg-slate-800 h-3 w-4/6 rounded-2xl"></div>
           </div>
         </div>
-        <div className="w-auto h-40 sm:w-52 sm:h-60 bg-slate-800 rounded-full sm:rounded-2xl shrink-0"></div>
       </div>
     </div>
   );

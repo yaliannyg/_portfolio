@@ -2,19 +2,23 @@ import {
   getAboutMe,
   getSections,
   getMeDetails,
-  getSkillsGrouped,
+  getSkills,
   getProjects,
   getContacts,
   getCTALabels,
-} from "./airtable";
+} from "./data";
 
-export const ctaPromise = getCTALabels();
-export const aboutMePromise = getAboutMe();
+const delay = new Promise<void>((resolve) => setTimeout(resolve, 1500));
 
-const afterPriority = Promise.all([ctaPromise, aboutMePromise]);
+const ctaData = getCTALabels();
+const aboutMeData = getAboutMe();
+export const sectionPromise = getSections();
+export const contactsPromise = getContacts();
+export const projectsPromise = getProjects();
+export const meDetailsPromise = getMeDetails();
+export const skillsGroupedPromise = getSkills();
 
-export const sectionPromise = afterPriority.then(() => getSections());
-export const contactsPromise = afterPriority.then(() => getContacts());
-export const projectsPromise = afterPriority.then(() => getProjects());
-export const meDetailsPromise = afterPriority.then(() => getMeDetails());
-export const skillsGroupedPromise = afterPriority.then(() => getSkillsGrouped());
+export const ctaPromise = Promise.all([ctaData, delay]).then(([data]) => data);
+export const aboutMePromise = Promise.all([aboutMeData, delay]).then(
+  ([data]) => data,
+);

@@ -1,4 +1,4 @@
-import type { CTALabels } from "@/lib/notion";
+import type { CTALabels } from "@/lib/data";
 
 interface NavbarProps {
   cvLink: string;

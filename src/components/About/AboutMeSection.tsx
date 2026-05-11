@@ -41,13 +41,6 @@ function AboutMeSection({
             <p className="whitespace-break-spaces">{summarize}</p>
           </div>
         </div>
-        <div className="w-auto h-40 sm:w-52 sm:h-60 ">
-          <img
-            src={aboutMeImg}
-            alt={aboutMeImgAlt}
-            className="sm:rounded-2xl rounded-full size-full shadow-2xs  "
-          />
-        </div>
       </div>
     </div>
   );

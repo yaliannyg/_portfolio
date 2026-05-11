@@ -1,10 +1,5 @@
 [build]
   publish = "dist"
-  edge_functions = "netlify/edge-functions"
-
-[[edge_functions]]
-  function = "airtable"
-  path = "/airtable/*"
 
 [[redirects]]
   from = "/*"

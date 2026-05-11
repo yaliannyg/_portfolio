@@ -1,4 +1,4 @@
-import type { Contact } from "@/lib/notion";
+import type { Contact } from "@/lib/data";
 import {
   IconMessage2,
   IconSchool,

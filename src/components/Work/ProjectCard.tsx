@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "../Modal";
-import { type ProjectItem } from "@/lib/notion";
+import { type ProjectItem } from "@/lib/data";
 import ModalProject from "./ModalProject";
 import { useCTALabels } from "@/context/CtaContext";
 

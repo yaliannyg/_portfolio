@@ -1,4 +1,4 @@
-import type { MeDetails } from "@/lib/notion";
+import type { MeDetails } from "@/lib/data";
 import {
   IconMessage2,
   IconSchool,

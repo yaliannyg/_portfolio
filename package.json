@@ -10,8 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@netlify/functions": "^5.1.5",
-    "@notionhq/client": "^5.14.0",
     "@tabler/icons-react": "^3.40.0",
     "@tailwindcss/vite": "^4.1.17",
     "clsx": "^2.1.1",
@@ -22,7 +20,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@netlify/edge-functions": "^3.0.6",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

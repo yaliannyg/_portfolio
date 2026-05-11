@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { use, createContext, useContext } from "react";
 import { ctaPromise } from "@/lib/queries";
-import type { CTALabels } from "@/lib/notion";
+import type { CTALabels } from "@/lib/data";
 
 const CTALabelsContext = createContext<CTALabels | undefined>(undefined);
 
