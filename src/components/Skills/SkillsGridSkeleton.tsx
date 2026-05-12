@@ -6,9 +6,9 @@ function SkillsGridSkeleton() {
       {[...new Array(3)].map((_, index) => (
         <div
           key={index}
-          className="flex flex-col bg-primary/10 rounded-xl p-4 border border-primary/20 gap-3"
+          className="flex flex-col bg-muted/30 rounded-xl p-4 border border-border gap-3"
         >
-          <div className="bg-slate-900 h-5 rounded-2xl"></div>
+          <div className="bg-on-muted h-5 rounded-2xl"></div>
 
           <div className="flex flex-col items-center gap-2.5">
             {[...new Array(3)].map((_, index) => (
@@ -20,12 +20,12 @@ function SkillsGridSkeleton() {
                   <div
                     className={cn(
                       "rounded-full size-1.5",
-                      index % 2 === 0 ? "bg-primary/50" : "bg-primary",
+                      index % 2 === 0 ? "bg-on-muted/50" : "bg-on-muted",
                     )}
                   ></div>
-                  <div className="bg-slate-900 h-full flex-1 rounded-2xl"></div>
+                  <div className="bg-on-muted h-full flex-1 rounded-2xl"></div>
                 </div>
-                <div className="bg-slate-900 w-1/4 rounded-2xl h-2"></div>
+                <div className="bg-muted w-1/4 rounded-2xl h-2"></div>
               </div>
             ))}
 

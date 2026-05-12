@@ -8,7 +8,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Suspense
       fallback={
-        <div className="bg-primary w-screen h-screen">
+        <div className="w-screen h-screen">
           <LandingPageSkeleton />
         </div>
       }

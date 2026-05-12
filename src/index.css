@@ -1,21 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap");
 @import url("./assets/transitions.css");
 @import "tailwindcss" important;
 
 @theme {
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --color-primary: #4db5ff;
-  --color-variant: #2c2c6c;
-  --color-dark: #161b22;
+  --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-muted: var(--muted);
+  --color-on-muted: var(--on-muted);
+  --color-border: var(--border);
 }
 
 html {
-  font-family: "Epilogue", ui-sans-serif, system-ui, sans-serif;
   scroll-behavior: smooth;
 }
 
 button,
 .btn {
-  color: var(--color-primary);
+  color: var(--color-on-muted);
   padding: 12px 20px;
   cursor: pointer;
+}
+
+:root,
+[data-theme="light"] {
+  --surface: #e1e5f2;
+  --surface-gradient: none;
+  --on-surface: #131313;
+  --muted: #bfdbf7;
+  --on-muted: #09b0ec;
+  --border: #c5d0fa;
+}
+
+[data-theme="dark"] {
+  --surface: #020617; /* flat color → for @theme color token */
+  --surface-gradient: linear-gradient(to bottom right, #020617, #1e293b);
+  --on-surface: var(--color-gray-400);
+  --muted: #4db5ff1a;
+  --on-muted: #ffffff;
+  --border: #4db5ff;
+}
+/* var(--color-slate-950), */ /* var(--color-slate-800) */
+body {
+  background: var(--surface-gradient, var(--surface));
 }

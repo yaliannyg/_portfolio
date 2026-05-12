@@ -10,9 +10,9 @@ function SkillsGrid() {
       {skillsGroups.map(({ category, skills }) => (
         <div
           key={`${category}`}
-          className="flex flex-col bg-primary/10 rounded-xl p-4 border border-primary/20 capitalize gap-3 text-sm"
+          className="flex flex-col bg-muted/30 rounded-xl p-4 border border-border capitalize gap-3 text-sm"
         >
-          <span className="font-semibold text-gray-400 text-sm uppercase">
+          <span className="font-semibold text-on-muted text-sm uppercase">
             {category}
           </span>
 
@@ -28,13 +28,13 @@ function SkillsGrid() {
                       "size-1.5 rounded-full",
 
                       _skill.level === "Intermediate"
-                        ? "bg-primary/50"
-                        : "bg-primary",
+                        ? "bg-on-muted/50"
+                        : "bg-on-muted",
                     )}
                   ></div>
                   <div className="text-xs">{_skill.name}</div>
                 </div>
-                <div className="font-semibold text-[10px] text-gray-400 ">
+                <div className="font-semibold text-[10px] text-on-muted/70">
                   {_skill.level}・<span>{_skill.years} years</span>
                 </div>
               </div>

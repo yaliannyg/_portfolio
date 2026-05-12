@@ -1,6 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
+    <script>
+      (function () {
+        const saved = localStorage.getItem("theme");
+
+        const preferred = window.matchMedia("(prefers-color-scheme: light)")
+          .matches
+          ? "dark"
+          : "light";
+
+        document.documentElement.setAttribute("data-theme", saved ?? preferred);
+      })();
+    </script>
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

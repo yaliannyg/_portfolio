@@ -33,7 +33,7 @@ function App() {
   const aboutMe = use(aboutMePromise);
 
   return (
-    <main className="text-white bg-linear-to-br from-slate-950 to-slate-800 min-h-screen p-5 relative">
+    <main className="text-on-surface min-h-screen p-5 relative">
       <div className="md:max-w-4xl m-auto px-10 ">
         <Navbar cvLink={aboutMe.cvLink} logo={aboutMe.logo} cta={labels} />
 
@@ -52,14 +52,15 @@ function App() {
 
             <div className="flex gap-2 mt-3">
               <a
-                className="btn rounded-full text-sm text-primary leading-none bg-primary/10"
+                className="btn rounded-full text-sm text-on-muted leading-none bg-muted/30"
                 href={aboutMe.cvLink}
                 target="_blank"
               >
                 {labels.Link.download_cv_btn}
               </a>
+
               <a
-                className="btn rounded-full text-sm text-variant leading-none bg-primary"
+                className="btn rounded-full text-sm text-on-surface leading-none bg-muted"
                 href="#contact"
               >
                 {labels.Link.talk_btn}
