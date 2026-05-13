@@ -14,6 +14,8 @@ function posthogInit() {
       api_host: "/ingest",
       ui_host: "https://us.posthog.com",
       defaults: "2026-01-30",
+      autocapture: true,
+      capture_pageview: true,
     });
   }
 }
