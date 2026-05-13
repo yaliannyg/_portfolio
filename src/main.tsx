@@ -9,9 +9,10 @@ import { PostHogProvider } from "@posthog/react";
 
 function posthogInit() {
   if (import.meta.env.VITE_ENV === "PROD") {
-    console.log("");
+    console.log("POSTHOG INIT");
     posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
-      api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+      api_host: "/ingest",
+      ui_host: "https://us.posthog.com",
       defaults: "2026-01-30",
     });
   }
