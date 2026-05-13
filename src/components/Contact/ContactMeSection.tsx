@@ -1,9 +1,13 @@
 import { use } from "react";
 import ContactCard from "../Contact/ContactCard";
 import { contactsPromise } from "@/lib/queries";
+import { usePostHog } from "@posthog/react";
 
 function ContactMeSection() {
-  function redirectTo(link: string) {
+  const posthog = usePostHog();
+
+  function redirectTo(link: string, title: string) {
+    posthog?.capture("contact_link_clicked", { contact_type: title, link });
     window.open(link);
   }
   const contactInfo = use(contactsPromise);
@@ -13,7 +17,7 @@ function ContactMeSection() {
         <button
           className="border-0 p-0"
           key={contact.id}
-          onClick={() => redirectTo(contact.link)}
+          onClick={() => redirectTo(contact.link, contact.title)}
         >
           <ContactCard
             id={contact.id}

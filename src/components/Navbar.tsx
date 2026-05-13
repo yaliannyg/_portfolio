@@ -1,6 +1,7 @@
 import type { CTALabels } from "@/lib/data";
 import LogoImg from "@/assets/logo.png";
 import { useTheme } from "@/context/useTheme";
+import { usePostHog } from "@posthog/react";
 
 interface NavbarProps {
   cvLink: string;
@@ -10,6 +11,16 @@ interface NavbarProps {
 
 function Navbar({ cvLink, logo, cta }: NavbarProps) {
   const { theme, toggle } = useTheme();
+  const posthog = usePostHog();
+
+  function handleCvDownload() {
+    posthog?.capture("cv_downloaded");
+  }
+
+  function handleThemeToggle() {
+    posthog?.capture("theme_toggled", { theme_to: theme === "dark" ? "light" : "dark" });
+    toggle();
+  }
 
   const navbar = {
     links: [
@@ -56,6 +67,7 @@ function Navbar({ cvLink, logo, cta }: NavbarProps) {
           className="btn rounded-full text-sm text-on-muted leading-none bg-muted/30"
           href={cvLink}
           target="_blank"
+          onClick={handleCvDownload}
         >
           {cta.Link.download_cv_btn}
         </a>
@@ -67,7 +79,7 @@ function Navbar({ cvLink, logo, cta }: NavbarProps) {
         </a>
       </div>
         <button
-        onClick={toggle}
+        onClick={handleThemeToggle}
         className="p-2 rounded-full text-on-muted hover:bg-muted/30"
       >
         {theme === "dark" ? "☀" : "☾"}

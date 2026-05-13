@@ -3,6 +3,7 @@ import Modal from "../Modal";
 import { type ProjectItem } from "@/lib/data";
 import ModalProject from "./ModalProject";
 import { useCTALabels } from "@/context/CtaContext";
+import { usePostHog } from "@posthog/react";
 
 type ProjectCardProps = Omit<ProjectItem, "key" | "id" | "order">;
 function ProjectCard({
@@ -14,9 +15,11 @@ function ProjectCard({
   subtitle,
 }: ProjectCardProps) {
   const labels = useCTALabels();
+  const posthog = usePostHog();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   function seeMore() {
+    posthog?.capture("project_viewed", { project_title: title, project_subtitle: subtitle });
     setIsModalOpen(true);
   }
 

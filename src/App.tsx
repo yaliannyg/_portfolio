@@ -1,5 +1,6 @@
 import { use, Suspense } from "react";
 import { useCTALabels } from "./context/CtaContext";
+import { usePostHog } from "@posthog/react";
 import Navbar from "./components/Navbar";
 import SectionsTitle from "./components/SectionsTitle";
 import AboutMeDetails from "./components/About/AboutMeDetails";
@@ -31,6 +32,7 @@ function SectionHeader({ sectionKey }: { sectionKey: SectionKey }) {
 function App() {
   const labels = useCTALabels();
   const aboutMe = use(aboutMePromise);
+  const posthog = usePostHog();
 
   return (
     <main className="text-on-surface min-h-screen p-5 relative">
@@ -55,6 +57,7 @@ function App() {
                 className="btn rounded-full text-sm text-on-muted leading-none bg-muted/30"
                 href={aboutMe.cvLink}
                 target="_blank"
+                onClick={() => posthog?.capture("cv_downloaded")}
               >
                 {labels.Link.download_cv_btn}
               </a>
