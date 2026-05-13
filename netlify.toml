@@ -2,20 +2,18 @@
   publish = "dist"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
   from = "/ingest/static/*"
   to = "https://us-assets.i.posthog.com/static/:splat"
-  host = "us-assets.i.posthog.com"
   status = 200
   force = true
 
 [[redirects]]
   from = "/ingest/*"
   to = "https://us.i.posthog.com/:splat"
-  host = "us.i.posthog.com"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
